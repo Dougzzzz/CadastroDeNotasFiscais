@@ -165,6 +165,82 @@ namespace CadastroDeNotasFiscais.Test
             Assert.Equal("Não foi possível salvar a nota: A inscrição do fornecedor é obrigatória.", excecao.Message);
         }
 
+        [Fact]
+        public void DeveObterTodosComFiltroDeNumeroDaNota()
+        {
+            var notasFiscais = ObterNotasFiscaisParaFiltros();
+            _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
+            var filtro = new FiltroDasNotasFiscais { NumeroDaNota = 2 };
+            var notasFiscaisObtidas = _servicoDasNotasFiscais.ObterTodos(filtro);
+            Assert.Single(notasFiscaisObtidas);
+            Assert.Equivalent(notasFiscais[1], notasFiscaisObtidas[0]);
+        }
+
+        [Fact]
+        public void DeveObterTodosComFiltroDeDataEmissao()
+        {
+            var notasFiscais = ObterNotasFiscaisParaFiltros();
+            _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
+            var filtro = new FiltroDasNotasFiscais { DataEmissao = "02/01/2025" };
+            var notasFiscaisObtidas = _servicoDasNotasFiscais.ObterTodos(filtro);
+            Assert.Single(notasFiscaisObtidas);
+            Assert.Equivalent(notasFiscais[1], notasFiscaisObtidas[0]);
+        }
+
+        [Fact]
+        public void DeveObterTodosComFiltroDeNomeDoCliente()
+        {
+            var notasFiscais = ObterNotasFiscaisParaFiltros();
+            _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
+            var filtro = new FiltroDasNotasFiscais { NomeDoCliente = "tiao" };
+            var notasFiscaisObtidas = _servicoDasNotasFiscais.ObterTodos(filtro);
+            Assert.Single(notasFiscaisObtidas);
+            Assert.Equivalent(notasFiscais[1], notasFiscaisObtidas[0]);
+        }
+
+        [Fact]
+        public void DeveObterTodosComFiltroDeNomeDoFornecedor()
+        {
+            var notasFiscais = ObterNotasFiscaisParaFiltros();
+            _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
+            var filtro = new FiltroDasNotasFiscais { NomeDoFornecedor = "tinoco" };
+            var notasFiscaisObtidas = _servicoDasNotasFiscais.ObterTodos(filtro);
+            Assert.Single(notasFiscaisObtidas);
+            Assert.Equivalent(notasFiscais[1], notasFiscaisObtidas[0]);
+        }
+
+
+        private List<NotaFiscal> ObterNotasFiscaisParaFiltros()
+        {
+            return new List<NotaFiscal>()
+            {
+                new NotaFiscal
+                {
+                    Numero = 1,
+                    Valor = 100,
+                    DataEmissao = "01/01/2025",
+                    Cliente = new Cliente { Nome = "Joao" },
+                    Fornecedor = new Fornecedor { Nome = "Tunico" }
+                },
+                new NotaFiscal
+                {
+                    Numero = 2,
+                    Valor = 200,
+                    DataEmissao = "02/01/2025",
+                    Cliente = new Cliente { Nome = "Tiao" },
+                    Fornecedor = new Fornecedor { Nome = "Tinoco" }
+                },
+                new NotaFiscal
+                {
+                    Numero = 3,
+                    Valor = 300,
+                    DataEmissao = "03/01/2025",
+                    Cliente = new Cliente { Nome = "Carreiro" },
+                    Fornecedor = new Fornecedor { Nome = "Jose" }
+                }
+            };
+        }
+
 
         private List<NotaFiscal> ObterNotasFiscais()
         {
