@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="MongoDBTestes.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
@@ -20,6 +24,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CadastroDeNotasFiscais.Dominio\CadastroDeNotasFiscais.Dominio.csproj" />
+    <ProjectReference Include="..\CadastroDeNotasFiscais.Infra\CadastroDeNotasFiscais.Infra.csproj" />
+    <ProjectReference Include="..\CadastroDeNotasFiscais\CadastroDeNotasFiscais.csproj" />
   </ItemGroup>
 
   <ItemGroup>

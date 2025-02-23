@@ -1,6 +1,5 @@
 ﻿using CadastroDeNotasFiscais.Dominio.NotasFiscais;
 using CadastroDeNotasFiscais.Serviços;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CadastroDeNotasFiscais.Controllers

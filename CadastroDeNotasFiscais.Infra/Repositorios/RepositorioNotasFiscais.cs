@@ -22,6 +22,12 @@ namespace CadastroDeNotasFiscais.Infra.Repositorios
             _collection = mongoDatabase.GetCollection<NotaFiscal>("notasFiscais");
         }
 
+        public RepositorioNotasFiscais(IMongoDatabase database)
+        {
+            _contadoresCollection = database.GetCollection<Contador>("contadores");
+            _collection = database.GetCollection<NotaFiscal>("notasFiscais");
+        }
+
         public void Inserir(NotaFiscal notaFiscal)
         {
             _collection.InsertOne(notaFiscal);
