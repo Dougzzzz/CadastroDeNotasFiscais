@@ -1,0 +1,95 @@
+{
+    "_version": "1.65.0",
+    "sap.app": {
+        "id": "cadastroDeNotasFiscais",
+        "i18n": "i18n/i18n.properties",
+        "title": "{{tituloApp}}",
+        "description": "{{decricaoApp}}",
+        "type": "application",
+        "applicationVersion": {
+            "version": "1.0.0"
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "dependencies": {
+            "minUI5Version": "1.98.0",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.m": {},
+                "sap.ui.webc.main": {},
+                "sap.ui.table": {}
+            }
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "cadastroDeNotasFiscais.i18n.i18n",
+                    "supportedLocales": [
+                        "pt_BR",
+                        "en"
+                    ],
+                    "fallbackLocale": ""
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "cadastroDeNotasFiscais.view.App",
+            "type": "XML",
+            "id": "app"
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "type": "View",
+                "viewType": "XML",
+                "path": "cadastroDeNotasFiscais.view",
+                "controlId": "app",
+                "controlAggregation": "pages"
+            },
+            "routes": [
+                {
+                    "pattern": "",
+                    "name": "listagem",
+                    "target": "listagem"
+                },
+                {
+                    "pattern": "cadastro",
+                    "name": "cadastro",
+                    "target": "cadastro"
+                },
+                {
+                    "pattern": "detalhes/{id}",
+                    "name": "detalhes",
+                    "target": "detalhes"
+                }
+            ],
+            "targets": {
+                "listagem": {
+                    "id": "listagem",
+                    "name": "Listagem"
+                },
+                "cadastro": {
+                    "id": "cadastro",
+                    "name": "Cadastro"
+                },
+                "detalhes": {
+                    "id": "detalhes",
+                    "name": "Detalhes"
+                }
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        }
+    }
+}
