@@ -9,14 +9,13 @@ namespace CadastroDeNotasFiscais.Dominio.NotasFiscais
         public ValidadorNotasFiscais()
         {
             RuleFor(notaFiscal => notaFiscal.Numero)
-                .NotEmpty()
+                .GreaterThan(0)
                 .WithMessage("O número da nota fiscal é obrigatório.");
             RuleFor(notaFiscal => notaFiscal.DataEmissao)
                 .NotEmpty()
                 .WithMessage("A data de emissão da nota fiscal é obrigatória.");
             RuleFor(notaFiscal => notaFiscal.Valor)
-                .NotEmpty()
-                .LessThan(0)
+                .GreaterThanOrEqualTo(0)
                 .WithMessage("O valor da nota fiscal é obrigatório e não pode ser menor que 0.");
             RuleFor(notaFiscal => notaFiscal.Fornecedor)
                 .NotNull()

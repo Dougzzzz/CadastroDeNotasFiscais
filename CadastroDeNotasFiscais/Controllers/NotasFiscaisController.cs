@@ -1,31 +1,56 @@
 ﻿using CadastroDeNotasFiscais.Dominio.NotasFiscais;
-using CadastroDeNotasFiscais.Infra.Repositorios;
+using CadastroDeNotasFiscais.Serviços;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CadastroDeNotasFiscais.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class NotasFiscaisController
+    public class NotasFiscaisController : ControllerBase
     {
-        private readonly RepositorioNotasFiscais _repositorio;
+        private readonly ServicoDasNotasFiscais _servicoDasNotasFiscais;
 
-        public NotasFiscaisController(RepositorioNotasFiscais repositorio)
+        public NotasFiscaisController(ServicoDasNotasFiscais servicoDasNotasFiscais)
         {
-            _repositorio = repositorio;
+            _servicoDasNotasFiscais = servicoDasNotasFiscais;
         }
 
         [HttpGet]
         public IActionResult ObterTodos()
         {
-            return new OkObjectResult(_repositorio.ObterTodos());
+            var listaDeNotasFiscais = _servicoDasNotasFiscais.ObterTodos();
+
+            return Ok(listaDeNotasFiscais);
         }
 
         [HttpPost]
-        public IActionResult Inserir([FromBody] NotaFiscal notaFiscal)
+        public IActionResult Adicionar([FromBody] NotaFiscal notaFiscal)
         {
-            _repositorio.Inserir(notaFiscal);
-            return new OkResult();
+            try
+            {
+                _servicoDasNotasFiscais.Adicionar(notaFiscal);
+
+            }catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            return Created("Nota fiscal salva com sucesso", notaFiscal);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult ObterPorId(string id)
+        {
+            try
+            {
+                var notaFiscal = _servicoDasNotasFiscais.ObterPorId(id);
+                return Ok(notaFiscal);
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
         }
     }
 }

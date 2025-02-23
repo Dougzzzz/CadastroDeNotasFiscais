@@ -32,7 +32,7 @@ namespace CadastroDeNotasFiscais.Infra.Repositorios
 
         public List<NotaFiscal> ObterTodos()
         {
-            return _collection.Find(notaFiscal => true).ToList();
+            return _collection.Find(notasFiscais => true).ToList();
         }
     }
 }

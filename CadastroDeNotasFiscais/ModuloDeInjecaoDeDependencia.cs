@@ -2,6 +2,7 @@
 using CadastroDeNotasFiscais.Dominio.Interfaces;
 using CadastroDeNotasFiscais.Dominio.NotasFiscais;
 using CadastroDeNotasFiscais.Infra.Repositorios;
+using CadastroDeNotasFiscais.Serviços;
 using FluentValidation;
 
 namespace CadastroDeNotasFiscais
@@ -14,11 +15,13 @@ namespace CadastroDeNotasFiscais
                 configuration.GetSection("NotasFiscaisDatabase"));
 
             services.AddSingleton<RepositorioNotasFiscais>();
-
+            services.AddScoped<ServicoDasNotasFiscais>();
             services.AddScoped<IValidator<Fornecedor>, ValidadorDosFornecedores>();
             services.AddScoped<IValidator<NotaFiscal>, ValidadorNotasFiscais>();
 
-            services.AddControllers();
+            services.AddControllers()
+                        .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
+            
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
