@@ -15,6 +15,8 @@ namespace CadastroDeNotasFiscais.Serviços
         }
         public void Adicionar(NotaFiscal notaFiscal)
         {
+            notaFiscal.Numero = _repositorioNotasFiscais.ObterProximoNumeroDaNotaFiscal();
+            notaFiscal.DataEmissao = DateTime.Now.ToString("dd/MM/yyyy");
             var resultadoDaValidacao = _validadorNotasFiscais.Validate(notaFiscal);
             if (!resultadoDaValidacao.IsValid)
             {
@@ -38,5 +40,7 @@ namespace CadastroDeNotasFiscais.Serviços
         {
             return _repositorioNotasFiscais.ObterTodos();
         }
+
+
     }
 }

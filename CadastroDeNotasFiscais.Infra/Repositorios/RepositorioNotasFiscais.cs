@@ -8,15 +8,17 @@ namespace CadastroDeNotasFiscais.Infra.Repositorios
     public class RepositorioNotasFiscais : IRepositorioNotasFiscais
     {
         private readonly IMongoCollection<NotaFiscal> _collection;
-        
-        public RepositorioNotasFiscais(IOptions<NotasFiscaisConfiguracoesDoBanco> bookStoreDatabaseSettings)
+        private readonly IMongoCollection<Contador> _contadoresCollection;
+
+        public RepositorioNotasFiscais(IOptions<NotasFiscaisConfiguracoesDoBanco> notasFiscaisDatabase)
         {
             var mongoClient = new MongoClient(
-            bookStoreDatabaseSettings.Value.ConnectionString);
+            notasFiscaisDatabase.Value.ConnectionString);
 
             var mongoDatabase = mongoClient.GetDatabase(
-                bookStoreDatabaseSettings.Value.DatabaseName);
+                notasFiscaisDatabase.Value.DatabaseName);
 
+            _contadoresCollection = mongoDatabase.GetCollection<Contador>("contadores");
             _collection = mongoDatabase.GetCollection<NotaFiscal>("notasFiscais");
         }
 
@@ -33,6 +35,25 @@ namespace CadastroDeNotasFiscais.Infra.Repositorios
         public List<NotaFiscal> ObterTodos()
         {
             return _collection.Find(notasFiscais => true).ToList();
+        }
+
+        public int ObterProximoNumeroDaNotaFiscal()
+        {
+            var filtro = Builders<Contador>.Filter.Eq(c => c.Id, "ContadorNotasFiscais");
+            var atualizacao = Builders<Contador>.Update.Inc(c => c.Sequencia, 1);
+            var opcoes = new FindOneAndUpdateOptions<Contador>
+            {
+                ReturnDocument = ReturnDocument.After,
+                IsUpsert = true
+            };
+
+            var contadorAtualizado = _contadoresCollection.FindOneAndUpdate(
+                filtro,
+                atualizacao,
+                opcoes
+            );
+
+            return contadorAtualizado.Sequencia;
         }
     }
 }
