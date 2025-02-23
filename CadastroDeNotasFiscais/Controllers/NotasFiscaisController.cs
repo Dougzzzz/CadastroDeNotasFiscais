@@ -16,9 +16,9 @@ namespace CadastroDeNotasFiscais.Controllers
         }
 
         [HttpGet]
-        public IActionResult ObterTodos()
+        public IActionResult ObterTodos([FromQuery] FiltroDasNotasFiscais filtro = null)
         {
-            var listaDeNotasFiscais = _servicoDasNotasFiscais.ObterTodos();
+            var listaDeNotasFiscais = _servicoDasNotasFiscais.ObterTodos(filtro);
 
             return Ok(listaDeNotasFiscais);
         }

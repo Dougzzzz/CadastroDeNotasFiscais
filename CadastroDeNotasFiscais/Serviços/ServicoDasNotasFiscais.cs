@@ -36,9 +36,9 @@ namespace CadastroDeNotasFiscais.Serviços
             return notaFiscal;
         }
 
-        public List<NotaFiscal> ObterTodos()
+        public List<NotaFiscal> ObterTodos(FiltroDasNotasFiscais filtro)
         {
-            return _repositorioNotasFiscais.ObterTodos();
+            return _repositorioNotasFiscais.ObterTodos(filtro);
         }
 
 

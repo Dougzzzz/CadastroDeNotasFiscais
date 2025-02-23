@@ -2,10 +2,10 @@
 
 namespace CadastroDeNotasFiscais.Dominio.Interfaces
 {
-    public interface IRepositorioNotasFiscais : IRepository<NotaFiscal>
+    public interface IRepositorioNotasFiscais : IRepository<NotaFiscal, FiltroDasNotasFiscais>
     {
         void Inserir(NotaFiscal notaFiscal);
         NotaFiscal ObterPorId(string id);
-        List<NotaFiscal> ObterTodos();
+        List<NotaFiscal> ObterTodos(FiltroDasNotasFiscais filtro);
     }
 }

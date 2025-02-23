@@ -2,6 +2,7 @@
 using CadastroDeNotasFiscais.Dominio.NotasFiscais;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using System.Text.RegularExpressions;
 
 namespace CadastroDeNotasFiscais.Infra.Repositorios
 {
@@ -38,9 +39,34 @@ namespace CadastroDeNotasFiscais.Infra.Repositorios
             return _collection.Find<NotaFiscal>(notaFiscal => notaFiscal.Id == id).FirstOrDefault();
         }
 
-        public List<NotaFiscal> ObterTodos()
+        public List<NotaFiscal> ObterTodos(FiltroDasNotasFiscais filtro)
         {
-            return _collection.Find(notasFiscais => true).ToList();
+            var query = _collection.AsQueryable();
+            if (filtro != null)
+            {
+                if (filtro.NumeroDaNota != null)
+                {
+                    query = query.Where(notaFiscal =>
+                            notaFiscal.Numero == filtro.NumeroDaNota);
+                }
+                if (filtro.DataEmissao != null)
+                {
+                    query = query.Where(notaFiscal =>
+                            notaFiscal.DataEmissao == filtro.DataEmissao);
+                }
+                if (filtro.NomeDoCliente != null)
+                {
+                    query = query.Where(notaFiscal =>
+                                    Regex.IsMatch(notaFiscal.Cliente.Nome, filtro.NomeDoCliente, RegexOptions.IgnoreCase));
+                }
+                if (filtro.NomeDoFornecedor != null)
+                {
+                    query = query.Where(notaFiscal =>
+                                    Regex.IsMatch(notaFiscal.Fornecedor.Nome, filtro.NomeDoFornecedor, RegexOptions.IgnoreCase));
+                }
+
+            }
+            return query.ToList();
         }
 
         public int ObterProximoNumeroDaNotaFiscal()

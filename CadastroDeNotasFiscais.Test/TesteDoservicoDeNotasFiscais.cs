@@ -54,7 +54,8 @@ namespace CadastroDeNotasFiscais.Test
         {
             var notasFiscais = ObterNotasFiscais();
             _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
-            var notasFiscaisObtidas = _servicoDasNotasFiscais.ObterTodos();
+            var filtro = new FiltroDasNotasFiscais();
+            var notasFiscaisObtidas = _servicoDasNotasFiscais.ObterTodos(filtro);
             Assert.Equal(notasFiscais.Count, notasFiscaisObtidas.Count);
             Assert.Collection(notasFiscaisObtidas,
                 item => Assert.Equal(notasFiscais[0].Valor, item.Valor),

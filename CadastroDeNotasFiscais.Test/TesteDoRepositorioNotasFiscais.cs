@@ -49,8 +49,8 @@ namespace CadastroDeNotasFiscais.Test
         {
             var notasFiscais = ObterNotasFiscais();
             _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
-
-            var notasFiscaisObtidas = _repository.ObterTodos();
+            var filtro = new FiltroDasNotasFiscais();
+            var notasFiscaisObtidas = _repository.ObterTodos(filtro);
 
             Assert.Equal(notasFiscais.Count, notasFiscaisObtidas.Count);
             Assert.Collection(notasFiscaisObtidas,
@@ -70,27 +70,78 @@ namespace CadastroDeNotasFiscais.Test
             Assert.Equivalent(notasFiscais[1], notaFiscalObtida);
         }
 
+        [Fact]
+        public void DeveObterTodosComFiltroDeNumeroDaNota()
+        {
+            var notasFiscais = ObterNotasFiscais();
+            _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
+            var filtro = new FiltroDasNotasFiscais { NumeroDaNota = 2 };
+            var notasFiscaisObtidas = _repository.ObterTodos(filtro);
+            Assert.Single(notasFiscaisObtidas);
+            Assert.Equivalent(notasFiscais[1], notasFiscaisObtidas[0]);
+        }
+
+        [Fact]
+        public void DeveObterTodosComFiltroDeDataEmissao()
+        {
+            var notasFiscais = ObterNotasFiscais();
+            _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
+            var filtro = new FiltroDasNotasFiscais { DataEmissao = "02/01/2025" };
+            var notasFiscaisObtidas = _repository.ObterTodos(filtro);
+            Assert.Single(notasFiscaisObtidas);
+            Assert.Equivalent(notasFiscais[1], notasFiscaisObtidas[0]);
+        }
+
+        [Fact]
+        public void DeveObterTodosComFiltroDeNomeDoCliente()
+        {
+            var notasFiscais = ObterNotasFiscais();
+            _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
+            var filtro = new FiltroDasNotasFiscais { NomeDoCliente = "tiao" };
+            var notasFiscaisObtidas = _repository.ObterTodos(filtro);
+            Assert.Single(notasFiscaisObtidas);
+            Assert.Equivalent(notasFiscais[1], notasFiscaisObtidas[0]);
+        }
+
+        [Fact]
+        public void DeveObterTodosComFiltroDeNomeDoFornecedor()
+        {
+            var notasFiscais = ObterNotasFiscais();
+            _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
+            var filtro = new FiltroDasNotasFiscais { NomeDoFornecedor = "tinoco" };
+            var notasFiscaisObtidas = _repository.ObterTodos(filtro);
+            Assert.Single(notasFiscaisObtidas);
+            Assert.Equivalent(notasFiscais[1], notasFiscaisObtidas[0]);
+        }
+
+
         private List<NotaFiscal> ObterNotasFiscais()
         {
             return new List<NotaFiscal>()
             {
                 new NotaFiscal 
-                { 
+                {
+                    Numero = 1,
                     Valor = 100,
-                    Cliente = new Cliente { Nome = "Cliente 1" },
-                    Fornecedor = new Fornecedor { Nome = "Fornecedor 1" } 
+                    DataEmissao = "01/01/2025",
+                    Cliente = new Cliente { Nome = "Joao" },
+                    Fornecedor = new Fornecedor { Nome = "Tunico" } 
                 },
                 new NotaFiscal
                 {
+                    Numero = 2,
                     Valor = 200,
-                    Cliente = new Cliente { Nome = "Cliente 2" },
-                    Fornecedor = new Fornecedor { Nome = "Fornecedor 2" }
+                    DataEmissao = "02/01/2025",
+                    Cliente = new Cliente { Nome = "Tiao" },
+                    Fornecedor = new Fornecedor { Nome = "Tinoco" }
                 },
                 new NotaFiscal
                 {
+                    Numero = 3,
                     Valor = 300,
-                    Cliente = new Cliente { Nome = "Cliente 3" },
-                    Fornecedor = new Fornecedor { Nome = "Fornecedor 3" }
+                    DataEmissao = "03/01/2025",
+                    Cliente = new Cliente { Nome = "Carreiro" },
+                    Fornecedor = new Fornecedor { Nome = "Jose" }
                 }
             };
         }
