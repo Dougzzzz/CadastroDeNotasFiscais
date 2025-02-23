@@ -1,17 +1,8 @@
-using CadastroDeNotasFiscais.Dominio.Repositorios;
-using CadastroDeNotasFiscais.Infra.Repositorios;
+using CadastroDeNotasFiscais;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.Configure<NotasFiscaisConfiguracoesDoBanco>(
-    builder.Configuration.GetSection("NotasFiscaisDatabase"));
-builder.Services.AddSingleton<RepositorioNotasFiscais>();
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+ModuloDeInjecaoDeDependencia.AdicionarServicos(builder.Services, builder.Configuration);
 
 var app = builder.Build();
 

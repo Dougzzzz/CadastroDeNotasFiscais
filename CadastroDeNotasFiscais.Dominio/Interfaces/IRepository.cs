@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CadastroDeNotasFiscais.Dominio.Repositorios
+namespace CadastroDeNotasFiscais.Dominio.Interfaces
 {
     public interface IRepository<T>
     {

@@ -1,5 +1,5 @@
-﻿using CadastroDeNotasFiscais.Dominio.NotasFiscais;
-using CadastroDeNotasFiscais.Dominio.Repositorios;
+﻿using CadastroDeNotasFiscais.Dominio.Interfaces;
+using CadastroDeNotasFiscais.Dominio.NotasFiscais;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 

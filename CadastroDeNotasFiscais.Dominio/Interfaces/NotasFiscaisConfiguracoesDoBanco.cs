@@ -1,4 +1,4 @@
-﻿namespace CadastroDeNotasFiscais.Dominio.Repositorios
+﻿namespace CadastroDeNotasFiscais.Dominio.Interfaces
 {
     public class NotasFiscaisConfiguracoesDoBanco
     {
