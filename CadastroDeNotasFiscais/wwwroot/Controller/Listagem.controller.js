@@ -1,11 +1,12 @@
 sap.ui.define([
     "./BaseController",
     "../model/Formatter",
+    "../Repositorios/ReservaRepository",
     "sap/m/MessageBox"
-], (BaseController, Formatter,  MessageBox) => {
+], (BaseController, Formatter, ReservaRepository, MessageBox) => {
     "use strict";
 
-    const CAMINHO_ROTA_LISTAGEM = "cadastroDeNotasFiscais.controller.Listagem";
+    const CAMINHO_ROTA_LISTAGEM = "cadastroNotas.controller.Listagem";
     const MODELO_LISTA = "TabelaReservas";
 
     return BaseController.extend(CAMINHO_ROTA_LISTAGEM, {
@@ -21,7 +22,19 @@ sap.ui.define([
         },
 
         _modeloListaReservas(filtro) {
-
+            try {
+                return ReservaRepository.obterTodos(filtro)
+                    .then(response => {
+                        return response.ok
+                            ? response.json()
+                            : Promise.reject(response);
+                    })
+                    .then(reservas => this.modelo(MODELO_LISTA, reservas))
+                    .catch(async erro => MessageBox.warning(await erro.text()))
+            }
+            catch (erro) {
+                MessageBox.warning(erro.message);
+            }
         },
 
         aoPesquisarFiltrarReservas(filtro) {

@@ -21,7 +21,7 @@ namespace CadastroDeNotasFiscais.Serviços
             if (!resultadoDaValidacao.IsValid)
             {
                 var erros = string.Join(",\n ", resultadoDaValidacao.Errors);
-                throw new Exception($"Não foi possível salvar a nota: {erros}");
+                throw new ValidationException($"Não foi possível salvar a nota: {erros}");
             }
             _repositorioNotasFiscais.Inserir(notaFiscal);
         }

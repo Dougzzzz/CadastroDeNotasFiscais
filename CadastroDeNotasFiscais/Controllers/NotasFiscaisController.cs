@@ -29,13 +29,13 @@ namespace CadastroDeNotasFiscais.Controllers
             try
             {
                 _servicoDasNotasFiscais.Adicionar(notaFiscal);
-
-            }catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
 
-            return Created("Nota fiscal salva com sucesso", notaFiscal);
+            return Created(notaFiscal.Id, notaFiscal);
         }
 
         [HttpGet("{id}")]

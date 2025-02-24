@@ -6,7 +6,7 @@ sap.ui.define([
 ], (Controller, JSONModel, MessageBox, BusyIndicator) => {
     "use strict";
 
-    const CAMINHO_ROTA_BASE_CONTROLLER = "cadastroDeNotasFiscais.controller.BaseController";
+    const CAMINHO_ROTA_BASE_CONTROLLER = "cadastroNotas.controller.BaseController";
 
     return Controller.extend(CAMINHO_ROTA_BASE_CONTROLLER, {
         modelo(nome, modelo) {

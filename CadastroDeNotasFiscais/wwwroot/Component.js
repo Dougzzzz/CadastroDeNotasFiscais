@@ -3,7 +3,7 @@ sap.ui.define([
 ], (UIComponent) => {
     "use strict";
 
-    return UIComponent.extend("cadastroDeNotasFiscais.Component", {
+    return UIComponent.extend("cadastroNotas.Component", {
         metadata: {
             interfaces: ["sap.ui.core.IAsyncContentCreation"],
             manifest: "json"

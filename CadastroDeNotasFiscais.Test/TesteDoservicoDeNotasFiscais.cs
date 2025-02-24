@@ -8,7 +8,7 @@ using MongoDB.Driver;
 
 namespace CadastroDeNotasFiscais.Test
 {
-    public class TesteDoservicoDeNotasFiscais : IDisposable
+    public class TesteDoServicoDeNotasFiscais : IDisposable
     {
         private readonly MongoDbRunner _runner;
         private readonly IMongoDatabase _database;
@@ -16,7 +16,7 @@ namespace CadastroDeNotasFiscais.Test
         private readonly ValidadorNotasFiscais _validadorNotasFiscais;
         private readonly ServicoDasNotasFiscais _servicoDasNotasFiscais;
 
-        public TesteDoservicoDeNotasFiscais()
+        public TesteDoServicoDeNotasFiscais()
         {
             _runner = MongoDbRunner.Start();
             var client = new MongoClient(_runner.ConnectionString);
