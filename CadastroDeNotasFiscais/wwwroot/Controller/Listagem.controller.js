@@ -1,13 +1,13 @@
 sap.ui.define([
     "./BaseController",
     "../model/Formatter",
-    "../Repositorios/ReservaRepository",
+    "../Repositorios/RepositorioNotasFiscais",
     "sap/m/MessageBox"
-], (BaseController, Formatter, ReservaRepository, MessageBox) => {
+], (BaseController, Formatter, RepositorioNotasFiscais, MessageBox) => {
     "use strict";
 
     const CAMINHO_ROTA_LISTAGEM = "cadastroNotas.controller.Listagem";
-    const MODELO_LISTA = "TabelaReservas";
+    const MODELO_LISTA = "listaNotasFiscais";
 
     return BaseController.extend(CAMINHO_ROTA_LISTAGEM, {
         formatter: Formatter,
@@ -18,18 +18,18 @@ sap.ui.define([
         },
 
         _aoCoincidirRota() {
-            this.exibirEspera(() => this._modeloListaReservas());
+            this.exibirEspera(() => this._modeloListaNotas());
         },
 
-        _modeloListaReservas(filtro) {
+        _modeloListaNotas(filtro) {
             try {
-                return ReservaRepository.obterTodos(filtro)
+                return RepositorioNotasFiscais.obterTodos(filtro)
                     .then(response => {
                         return response.ok
                             ? response.json()
                             : Promise.reject(response);
                     })
-                    .then(reservas => this.modelo(MODELO_LISTA, reservas))
+                    .then(notas => this.modelo(MODELO_LISTA, notas))
                     .catch(async erro => MessageBox.warning(await erro.text()))
             }
             catch (erro) {
@@ -37,12 +37,12 @@ sap.ui.define([
             }
         },
 
-        aoPesquisarFiltrarReservas(filtro) {
+        aoPesquisarFiltrarNotas(filtro) {
             this.exibirEspera(() => {
                 const parametroQuery = "query";
                 const stringFiltro = filtro.getParameter(parametroQuery);
 
-                this._modeloListaReservas(stringFiltro);
+                this._modeloListaNotas(stringFiltro);
             });
         },
 
@@ -56,13 +56,13 @@ sap.ui.define([
         aoClicarAbrirDetalhes(evento) {
             this.exibirEspera(() => {
                 const propriedadeId = "id";
-                const idReserva = evento
+                const idNotaFiscal = evento
                     .getSource()
                     .getBindingContext(MODELO_LISTA)
                     .getProperty(propriedadeId);
 
                 const rotaDetalhes = "detalhes";
-                this.navegarPara(rotaDetalhes, idReserva);
+                this.navegarPara(rotaDetalhes, idNotaFiscal);
             });
         }
     });

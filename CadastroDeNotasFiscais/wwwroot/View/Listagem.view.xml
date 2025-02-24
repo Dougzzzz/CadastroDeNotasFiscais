@@ -18,7 +18,7 @@
                     <SearchField
                         placeholder="{i18n>placeholderCampoPesquisaFiltro}"
                         width="30%"
-                        search=".aoPesquisarFiltrarReservas" />
+                        search=".aoPesquisarFiltrarNotas" />
                     <Button
                         type="Emphasized"
                         icon="sap-icon://add"
@@ -26,9 +26,9 @@
                 </Toolbar>
             </headerToolbar>
             <Table
-                id="idTabelaReservas"
+                id="idTabelaNotas"
                 width="auto"
-                items="{TabelaReservas>/}"
+                items="{listaNotasFiscais>/}"
                 growing="true"
                 growingThreshold="10"
                 growingScrollToLoad="true">
@@ -83,9 +83,9 @@
                         type="Navigation"
                         press=".aoClicarAbrirDetalhes">
                         <cells>
-                            <ObjectIdentifier title="{TabelaReservas>nome}" />
-                            <ObjectIdentifier title="{TabelaReservas>cpf}" />
-                            <Text text="{TabelaReservas>telefone}" />
+                            <ObjectIdentifier title="{listaNotasFiscais>Numero}" />
+                            <ObjectIdentifier title="{listaNotasFiscais>DataEmissao}" />
+                            <Text text="{TabelaReservas>Valor}" />
                             <Text text="{TabelaReservas>idade}" />
                             <Text
                                 text="{
