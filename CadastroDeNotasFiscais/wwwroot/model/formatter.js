@@ -4,46 +4,25 @@ sap.ui.define([
 ], (DateFormat, NumberFormat) => {
     "use strict";
 
-    const MODEL_I18N = "i18n";
-
     return {
-        formataSexo(sexo) {
-            const textoSexoMasculino = "sexo0";
-            const textoSexoFeminino = "sexo1";
-            const resourceBundle = this.getOwnerComponent().getModel(MODEL_I18N).getResourceBundle();
+        formatadorDeCpfOuCnpj: function (valor) {
+            const regexCNPJ = "(\\d{2})(\\d{3})(\\d{3})(\\d{4})(\\d{2})";
+            const replaceCnpj = "$1.$2.$3/$4-$5";
+            const regexCPF = "(\\d{3})(\\d{3})(\\d{3})(\\d{2})";
+            const replaceCpf = "$1.$2.$3-$4";
+            valor = (valor || "").replace(/[^0-9]/g, "");
 
-            return resourceBundle.getText(sexo ? textoSexoFeminino : textoSexoMasculino)
-        },
+            if (valor.length === 11) {
+                const regex = new RegExp(regexCPF);
+                return valor.replace(regex, replaceCpf);
+            }
 
-        formataPrecoEstadia(precoEstadia) {
-            const charVirgula = ",";
-            const charPonto = ".";
-            const regexPontos = /\./g;
-            const stringVazia = "";
+            if (valor.length === 14) {
+                const regex = new RegExp(regexCNPJ);
+                return valor.replace(regex, replaceCnpj);
+            }
 
-            return NumberFormat
-                .getCurrencyInstance({ currencyCode: false })
-                .format(parseFloat(String(precoEstadia)
-                    .replace(regexPontos, stringVazia)
-                    .replace(charVirgula, charPonto)));
-        },
-
-        desformataPrecoEstadia(precoEstadia) {
-            const regexPontos = /\./g;
-            const regexVirgulas = /,/;
-            const charPonto = ".";
-
-            return String(precoEstadia)
-                .replace(regexPontos, String())
-                .replace(regexVirgulas, charPonto);
-        },
-
-        formataPagamentoEfetuado(pagamentoEfetuado) {
-            const textoPagamentoFoiEfetuado = "pagamentoEfetuadoTrue";
-            const textoPagamentoNaoFoiEfetuado = "pagamentoEfetuadoFalse";
-            const recursosI18n = this.getOwnerComponent().getModel(MODEL_I18N).getResourceBundle();
-
-            return recursosI18n.getText(pagamentoEfetuado ? textoPagamentoFoiEfetuado : textoPagamentoNaoFoiEfetuado);
+            return valor;
         },
 
         formataData(data) {
