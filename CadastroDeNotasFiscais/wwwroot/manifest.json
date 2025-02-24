@@ -1,5 +1,5 @@
 {
-    "_version": "1.65.0",
+    "version": "1.65.0",
     "sap.app": {
         "id": "cadastroDeNotasFiscais",
         "i18n": "i18n/i18n.properties",

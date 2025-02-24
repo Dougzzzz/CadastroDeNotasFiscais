@@ -49,7 +49,7 @@ namespace CadastroDeNotasFiscais.Test
         {
             var notasFiscais = ObterNotasFiscais();
             _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
-            var filtro = new FiltroDasNotasFiscais();
+            var filtro = new FiltroDasNotasFiscais(null,null,null,null);
             var notasFiscaisObtidas = _repository.ObterTodos(filtro);
 
             Assert.Equal(notasFiscais.Count, notasFiscaisObtidas.Count);
@@ -75,7 +75,7 @@ namespace CadastroDeNotasFiscais.Test
         {
             var notasFiscais = ObterNotasFiscais();
             _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
-            var filtro = new FiltroDasNotasFiscais { NumeroDaNota = 2 };
+            var filtro = new FiltroDasNotasFiscais(null, null, null, 2);
             var notasFiscaisObtidas = _repository.ObterTodos(filtro);
             Assert.Single(notasFiscaisObtidas);
             Assert.Equivalent(notasFiscais[1], notasFiscaisObtidas[0]);
@@ -86,7 +86,7 @@ namespace CadastroDeNotasFiscais.Test
         {
             var notasFiscais = ObterNotasFiscais();
             _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
-            var filtro = new FiltroDasNotasFiscais { DataEmissao = "02/01/2025" };
+            var filtro = new FiltroDasNotasFiscais(null, null, "02/01/2025", null);
             var notasFiscaisObtidas = _repository.ObterTodos(filtro);
             Assert.Single(notasFiscaisObtidas);
             Assert.Equivalent(notasFiscais[1], notasFiscaisObtidas[0]);
@@ -97,7 +97,7 @@ namespace CadastroDeNotasFiscais.Test
         {
             var notasFiscais = ObterNotasFiscais();
             _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
-            var filtro = new FiltroDasNotasFiscais { NomeDoCliente = "tiao" };
+            var filtro = new FiltroDasNotasFiscais ("tiao", null, null, null);
             var notasFiscaisObtidas = _repository.ObterTodos(filtro);
             Assert.Single(notasFiscaisObtidas);
             Assert.Equivalent(notasFiscais[1], notasFiscaisObtidas[0]);
@@ -108,7 +108,7 @@ namespace CadastroDeNotasFiscais.Test
         {
             var notasFiscais = ObterNotasFiscais();
             _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
-            var filtro = new FiltroDasNotasFiscais { NomeDoFornecedor = "tinoco" };
+            var filtro = new FiltroDasNotasFiscais (null, "tinoco", null, null);
             var notasFiscaisObtidas = _repository.ObterTodos(filtro);
             Assert.Single(notasFiscaisObtidas);
             Assert.Equivalent(notasFiscais[1], notasFiscaisObtidas[0]);

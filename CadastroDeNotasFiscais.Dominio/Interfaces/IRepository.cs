@@ -6,6 +6,6 @@ namespace CadastroDeNotasFiscais.Dominio.Interfaces
     {
         void Inserir(T entidade);
         T ObterPorId(string id);
-        List<T> ObterTodos(TFiltro filtro = default);
+        List<T> ObterTodos(TFiltro filtro = default!);
     }
 }

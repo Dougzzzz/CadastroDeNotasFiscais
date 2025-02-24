@@ -1,4 +1,5 @@
-﻿using CadastroDeNotasFiscais.Dominio.Interfaces;
+﻿using CadastroDeNotasFiscais.Dominio.Clientes;
+using CadastroDeNotasFiscais.Dominio.Interfaces;
 using CadastroDeNotasFiscais.Dominio.NotasFiscais;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
@@ -9,34 +10,38 @@ namespace CadastroDeNotasFiscais.Infra.Repositorios
     public class RepositorioNotasFiscais : IRepositorioNotasFiscais
     {
         private readonly IMongoCollection<NotaFiscal> _collection;
-        private readonly IMongoCollection<Contador> _contadoresCollection;
+        private readonly IMongoCollection<ContadorNotasFiscais> _contadoresCollection;
+        private readonly MongoClient _mongoClient;
 
         public RepositorioNotasFiscais(IOptions<NotasFiscaisConfiguracoesDoBanco> notasFiscaisDatabase)
         {
-            var mongoClient = new MongoClient(
-            notasFiscaisDatabase.Value.ConnectionString);
+            _mongoClient = new MongoClient(notasFiscaisDatabase.Value.ConnectionString);
 
-            var mongoDatabase = mongoClient.GetDatabase(
+            var mongoDatabase = _mongoClient.GetDatabase(
                 notasFiscaisDatabase.Value.DatabaseName);
 
-            _contadoresCollection = mongoDatabase.GetCollection<Contador>("contadores");
+            _contadoresCollection = mongoDatabase.GetCollection<ContadorNotasFiscais>("contadores");
             _collection = mongoDatabase.GetCollection<NotaFiscal>("notasFiscais");
         }
 
         public RepositorioNotasFiscais(IMongoDatabase database)
         {
-            _contadoresCollection = database.GetCollection<Contador>("contadores");
+            _mongoClient = new MongoClient(database.Client.Settings);
+            _contadoresCollection = database.GetCollection<ContadorNotasFiscais>("contadores");
             _collection = database.GetCollection<NotaFiscal>("notasFiscais");
         }
 
         public void Inserir(NotaFiscal notaFiscal)
         {
-            _collection.InsertOne(notaFiscal);
+            ExecutarTransaction(() =>
+            {
+                _collection.InsertOne(notaFiscal);
+            });
         }
 
         public NotaFiscal ObterPorId(string id)
         {
-            return _collection.Find<NotaFiscal>(notaFiscal => notaFiscal.Id == id).FirstOrDefault();
+            return _collection.Find(notaFiscal => notaFiscal.Id == id).FirstOrDefault();
         }
 
         public List<NotaFiscal> ObterTodos(FiltroDasNotasFiscais filtro)
@@ -71,9 +76,9 @@ namespace CadastroDeNotasFiscais.Infra.Repositorios
 
         public int ObterProximoNumeroDaNotaFiscal()
         {
-            var filtro = Builders<Contador>.Filter.Eq(c => c.Id, "ContadorNotasFiscais");
-            var atualizacao = Builders<Contador>.Update.Inc(c => c.Sequencia, 1);
-            var opcoes = new FindOneAndUpdateOptions<Contador>
+            var filtro = Builders<ContadorNotasFiscais>.Filter.Eq(c => c.Id, "ContadorNotasFiscais");
+            var atualizacao = Builders<ContadorNotasFiscais>.Update.Inc(c => c.Sequencia, 1);
+            var opcoes = new FindOneAndUpdateOptions<ContadorNotasFiscais>
             {
                 ReturnDocument = ReturnDocument.After,
                 IsUpsert = true
@@ -86,6 +91,24 @@ namespace CadastroDeNotasFiscais.Infra.Repositorios
             );
 
             return contadorAtualizado.Sequencia;
+        }
+
+        public void ExecutarTransaction(Action action)
+        {
+            using var session = _mongoClient.StartSession();
+            
+            session.StartTransaction();
+            
+            try
+            {
+                action();
+                session.CommitTransaction();
+            }
+            catch (Exception)
+            {
+                session.AbortTransaction();
+                throw;
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using CadastroDeNotasFiscais.Dominio.NotasFiscais;
 using CadastroDeNotasFiscais.Infra.Repositorios;
 using CadastroDeNotasFiscais.Serviços;
 using FluentValidation;
+using Microsoft.Extensions.Options;
 
 namespace CadastroDeNotasFiscais
 {
@@ -11,10 +12,10 @@ namespace CadastroDeNotasFiscais
     {
         public static void AdicionarServicos(IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<NotasFiscaisConfiguracoesDoBanco>(
-                configuration.GetSection("NotasFiscaisDatabase"));
+            services.Configure<NotasFiscaisConfiguracoesDoBanco>(configuration.GetSection("NotasFiscaisDatabase"));
+            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<NotasFiscaisConfiguracoesDoBanco>>().Value);
 
-            services.AddSingleton<RepositorioNotasFiscais>();
+            services.AddScoped<RepositorioNotasFiscais>();
             services.AddScoped<ServicoDasNotasFiscais>();
             services.AddScoped<IValidator<Fornecedor>, ValidadorDosFornecedores>();
             services.AddScoped<IValidator<NotaFiscal>, ValidadorNotasFiscais>();
@@ -24,7 +25,6 @@ namespace CadastroDeNotasFiscais
             
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-
         }
     }
 }

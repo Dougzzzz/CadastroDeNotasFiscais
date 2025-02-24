@@ -1,9 +1,9 @@
 {
-  "name": "ui5.cadastroDeNotasFiscais",
+  "name": "cadastro",
   "version": "1.0.0",
   "description": "aplicacação para cadastro de notas fiscais",
   "scripts": {
-      "start": "ui5 serve -o index.html"
+    "start": "ui5 serve -o index.html"
   },
   "dependencies": {
     "node": "^18.20.7"
