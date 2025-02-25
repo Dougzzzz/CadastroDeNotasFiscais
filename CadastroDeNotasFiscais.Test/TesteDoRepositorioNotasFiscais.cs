@@ -23,7 +23,7 @@ namespace CadastroDeNotasFiscais.Test
 
 
         [Fact]
-        public void DeveInserirNotaFiscal()
+        public void deve_inserir_nota_fiscal()
         {
             var notaFiscal = new NotaFiscal
             {
@@ -45,7 +45,7 @@ namespace CadastroDeNotasFiscais.Test
         }
 
         [Fact]
-        public void DeveObterNotasFiscais()
+        public void deve_obter_notas_fiscais()
         {
             var notasFiscais = ObterNotasFiscais();
             _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
@@ -61,7 +61,7 @@ namespace CadastroDeNotasFiscais.Test
         }
 
         [Fact]
-        public void DeveObterNotaFiscalPorId()
+        public void deve_obter_nota_fiscal_por_id()
         {
             var notasFiscais = ObterNotasFiscais();
             _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
@@ -71,7 +71,7 @@ namespace CadastroDeNotasFiscais.Test
         }
 
         [Fact]
-        public void DeveObterTodosComFiltroDeNumeroDaNota()
+        public void deve_obter_todos_com_filtro_de_numero_da_nota()
         {
             var notasFiscais = ObterNotasFiscais();
             _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
@@ -82,7 +82,7 @@ namespace CadastroDeNotasFiscais.Test
         }
 
         [Fact]
-        public void DeveObterTodosComFiltroDeDataEmissao()
+        public void deve_obter_todos_com_filtro_de_data_emissao()
         {
             var notasFiscais = ObterNotasFiscais();
             _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
@@ -93,7 +93,7 @@ namespace CadastroDeNotasFiscais.Test
         }
 
         [Fact]
-        public void DeveObterTodosComFiltroDeNomeDoCliente()
+        public void deve_obter_todos_com_filtro_de_nome_do_cliente()
         {
             var notasFiscais = ObterNotasFiscais();
             _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
@@ -104,7 +104,7 @@ namespace CadastroDeNotasFiscais.Test
         }
 
         [Fact]
-        public void DeveObterTodosComFiltroDeNomeDoFornecedor()
+        public void deve_obter_todos_com_filtro_de_nome_do_fornecedor()
         {
             var notasFiscais = ObterNotasFiscais();
             _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);

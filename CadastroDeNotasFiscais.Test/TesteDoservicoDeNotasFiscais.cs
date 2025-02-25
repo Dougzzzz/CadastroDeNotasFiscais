@@ -3,6 +3,7 @@ using CadastroDeNotasFiscais.Dominio.Fornecedores;
 using CadastroDeNotasFiscais.Dominio.NotasFiscais;
 using CadastroDeNotasFiscais.Infra.Repositorios;
 using CadastroDeNotasFiscais.Serviços;
+using FluentValidation;
 using Mongo2Go;
 using MongoDB.Driver;
 
@@ -27,7 +28,7 @@ namespace CadastroDeNotasFiscais.Test
         }
 
         [Fact]
-        public void DeveInserirNotaFiscal()
+        public void deve_inserir_nota_fiscal()
         {
             var notaFiscal = new NotaFiscal
             {
@@ -50,7 +51,7 @@ namespace CadastroDeNotasFiscais.Test
         }
 
         [Fact]
-        public void DeveObterTodasNotasFiscais()
+        public void deve_obter_todas_notas_fiscais()
         {
             var notasFiscais = ObterNotasFiscais();
             _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
@@ -65,7 +66,7 @@ namespace CadastroDeNotasFiscais.Test
         }
 
         [Fact]
-        public void DeveObterNotaFiscalPorId()
+        public void deve_obter_nota_fiscal_por_id()
         {
             var notasFiscais = ObterNotasFiscais();
             _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
@@ -75,7 +76,7 @@ namespace CadastroDeNotasFiscais.Test
         }
 
         [Fact]
-        public void DeveEstourarValidacaoAoInserirNotaFiscalComValorNegativo()
+        public void deve_estourar_validacao_ao_inserir_nota_fiscal_com_valor_negativo()
         {
             var notaFiscal = new NotaFiscal
             {
@@ -83,12 +84,12 @@ namespace CadastroDeNotasFiscais.Test
                 Cliente = new Cliente { Nome = "Cliente 1", Inscricao = "inscricao" },
                 Fornecedor = new Fornecedor { Nome = "Fornecedor 1", Inscricao = "inscricao" }
             };
-            var excecao = Assert.Throws<Exception>(() => _servicoDasNotasFiscais.Adicionar(notaFiscal));
+            var excecao = Assert.Throws<ValidationException>(() => _servicoDasNotasFiscais.Adicionar(notaFiscal));
             Assert.Equal("Não foi possível salvar a nota: O valor da nota fiscal é obrigatório e não pode ser menor que 0.", excecao.Message);
         }
 
         [Fact]
-        public void DeveEstourarValidacaoAoInserirNotaFiscalSemCliente()
+        public void deve_estourar_validacao_ao_inserir_nota_fiscal_sem_cliente()
         {
             var notaFiscal = new NotaFiscal
             {
@@ -96,12 +97,12 @@ namespace CadastroDeNotasFiscais.Test
                 Cliente = null,
                 Fornecedor = new Fornecedor { Nome = "Fornecedor 1", Inscricao = "inscricao" }
             };
-            var excecao = Assert.Throws<Exception>(() => _servicoDasNotasFiscais.Adicionar(notaFiscal));
+            var excecao = Assert.Throws<ValidationException>(() => _servicoDasNotasFiscais.Adicionar(notaFiscal));
             Assert.Equal("Não foi possível salvar a nota: O cliente da nota fiscal é obrigatório.", excecao.Message);
         }
 
         [Fact]
-        public void DeveEstourarValidacaoAoInserirNotaFiscalSemFornecedor()
+        public void deve_estourar_validacao_ao_inserir_nota_fiscal_sem_fornecedor()
         {
             var notaFiscal = new NotaFiscal
             {
@@ -109,12 +110,12 @@ namespace CadastroDeNotasFiscais.Test
                 Cliente = new Cliente { Nome = "Cliente 1", Inscricao = "inscricao" },
                 Fornecedor = null
             };
-            var excecao = Assert.Throws<Exception>(() => _servicoDasNotasFiscais.Adicionar(notaFiscal));
+            var excecao = Assert.Throws<ValidationException>(() => _servicoDasNotasFiscais.Adicionar(notaFiscal));
             Assert.Equal("Não foi possível salvar a nota: O fornecedor da nota fiscal é obrigatório.", excecao.Message);
         }
 
         [Fact]
-        public void DeveEstourarValidacaoAoInserirNotaFiscalComClienteSemNome()
+        public void deve_estourar_validacao_ao_inserir_nota_fiscal_com_cliente_sem_nome()
         {
             var notaFiscal = new NotaFiscal
             {
@@ -122,12 +123,12 @@ namespace CadastroDeNotasFiscais.Test
                 Cliente = new Cliente { Inscricao = "Inscricao" },
                 Fornecedor = new Fornecedor { Nome = "Fornecedor 1", Inscricao = "inscricao" }
             };
-            var excecao = Assert.Throws<Exception>(() => _servicoDasNotasFiscais.Adicionar(notaFiscal));
+            var excecao = Assert.Throws<ValidationException>(() => _servicoDasNotasFiscais.Adicionar(notaFiscal));
             Assert.Equal("Não foi possível salvar a nota: O nome do cliente é obrigatório.", excecao.Message);
         }
 
         [Fact]
-        public void DeveEstourarValidacaoAoInserirNotaFiscalComClienteSemInscricao()
+        public void deve_estourar_validacao_ao_inserir_nota_fiscal_com_cliente_sem_inscricao()
         {
             var notaFiscal = new NotaFiscal
             {
@@ -135,12 +136,12 @@ namespace CadastroDeNotasFiscais.Test
                 Cliente = new Cliente { Nome = "Cliente 1" },
                 Fornecedor = new Fornecedor { Nome = "Fornecedor 1", Inscricao = "inscricao" }
             };
-            var excecao = Assert.Throws<Exception>(() => _servicoDasNotasFiscais.Adicionar(notaFiscal));
+            var excecao = Assert.Throws<ValidationException>(() => _servicoDasNotasFiscais.Adicionar(notaFiscal));
             Assert.Equal("Não foi possível salvar a nota: A inscrição do cliente é obrigatória.", excecao.Message);
         }
 
         [Fact]
-        public void DeveEstourarValidacaoAoInserirNotaFiscalComFornecedorSemNome()
+        public void deve_estourar_validacao_ao_inserir_nota_fiscal_com_fornecedor_sem_nome()
         {
             var notaFiscal = new NotaFiscal
             {
@@ -148,12 +149,12 @@ namespace CadastroDeNotasFiscais.Test
                 Cliente = new Cliente { Nome = "Fornecedor 1", Inscricao = "inscricao" },
                 Fornecedor = new Fornecedor { Inscricao = "Inscricao" }
             };
-            var excecao = Assert.Throws<Exception>(() => _servicoDasNotasFiscais.Adicionar(notaFiscal));
+            var excecao = Assert.Throws<ValidationException>(() => _servicoDasNotasFiscais.Adicionar(notaFiscal));
             Assert.Equal("Não foi possível salvar a nota: O nome do fornecedor é obrigatório.", excecao.Message);
         }
 
         [Fact]
-        public void DeveEstourarValidacaoAoInserirNotaFiscalComFornecedorSemInscricao()
+        public void deve_estourar_validacao_ao_inserir_nota_fiscal_com_fornecedor_sem_inscricao()
         {
             var notaFiscal = new NotaFiscal
             {
@@ -161,12 +162,12 @@ namespace CadastroDeNotasFiscais.Test
                 Cliente = new Cliente { Nome = "Fornecedor 1", Inscricao = "inscricao" },
                 Fornecedor = new Fornecedor { Nome = "Cliente 1" }
             };
-            var excecao = Assert.Throws<Exception>(() => _servicoDasNotasFiscais.Adicionar(notaFiscal));
+            var excecao = Assert.Throws<ValidationException>(() => _servicoDasNotasFiscais.Adicionar(notaFiscal));
             Assert.Equal("Não foi possível salvar a nota: A inscrição do fornecedor é obrigatória.", excecao.Message);
         }
 
         [Fact]
-        public void DeveObterTodosComFiltroDeNumeroDaNota()
+        public void deve_obter_todos_com_filtro_de_numero_da_nota()
         {
             var notasFiscais = ObterNotasFiscaisParaFiltros();
             _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
@@ -177,7 +178,7 @@ namespace CadastroDeNotasFiscais.Test
         }
 
         [Fact]
-        public void DeveObterTodosComFiltroDeDataEmissao()
+        public void deve_obter_todos_com_filtro_de_data_emissao()
         {
             var notasFiscais = ObterNotasFiscaisParaFiltros();
             _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
@@ -188,7 +189,7 @@ namespace CadastroDeNotasFiscais.Test
         }
 
         [Fact]
-        public void DeveObterTodosComFiltroDeNomeDoCliente()
+        public void deve_obter_todos_com_filtro_de_nome_do_cliente()
         {
             var notasFiscais = ObterNotasFiscaisParaFiltros();
             _database.GetCollection<NotaFiscal>("notasFiscais").InsertMany(notasFiscais);
