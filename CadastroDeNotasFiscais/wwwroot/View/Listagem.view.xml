@@ -15,23 +15,19 @@
         <f:beginColumnPages>
             <Page
                 id="listPage"
-                showHeader="true">
-                
+                showHeader="true">                
                 <headerContent>
                     <ToolbarSpacer />
                     <Title titleStyle="H4" text="{i18n>tituloTelaListagem}" class="sapUiSmallMarginBegin" />
                     <ToolbarSpacer />
-                </headerContent>
-                
+                </headerContent>                
                 <Panel
                     class="sapUiResponsiveMargin"
                     width="auto"
                     accessibleRole="Region"
-                    stickyHeader="true">
-                    
+                    stickyHeader="true">                    
                     <content>
                         <Panel
-                            id="filterPanel"
                             headerText="Filtros"
                             expandable="true"
                             expanded="false"
@@ -39,52 +35,51 @@
                             
                             <content>
                                 <Toolbar>
-                                    <Label text="Número:" design="Bold" class="sapUiSmallMarginEnd"/>
+                                    <Label text="{i18n>tituloColunaNumero}" design="Bold" class="sapUiSmallMarginEnd"/>
                                     <Input
                                         width="10rem"
-                                        placeholder="Digite o número"
+                                        placeholder="{i18n>placeholderDigiteUmNumero}"
+                                        type="Number"
                                         class="sapUiSmallMarginEnd"
-                                        liveChange=".onFilterChange"/>
+                                        value="{filtro>/NumeroDaNota}"/>
                                 
-                                    <Label text="Data de Emissão:" design="Bold" class="sapUiSmallMarginEnd"/>
+                                    <Label text="{i18n>tituloColunaDataDeEmissao}" design="Bold" class="sapUiSmallMarginEnd"/>
                                     <DatePicker
                                         width="10rem"
-                                        placeholder="Selecione a data"
+                                        placeholder="{i18n>placeholderDigiteUmaData}"
                                         class="sapUiSmallMarginEnd"
-                                        change=".onFilterChange"/>
+                                        value="{filtro>/DataEmissao}"/>
                                 
-                                    <Label text="Fornecedor:" design="Bold" class="sapUiSmallMarginEnd"/>
+                                    <Label text="{i18n>tituloColunaNomeDoFornecedor}" design="Bold" class="sapUiSmallMarginEnd"/>
                                     <Input
                                         width="12rem"
-                                        placeholder="Digite o fornecedor"
+                                        placeholder="{i18n>placeholderDigiteNomeDoFornecedor}"
                                         class="sapUiSmallMarginEnd"
-                                        liveChange=".onFilterChange"/>
+                                        value="{filtro>/NomeDoFornecedor}"/>
                                 
-                                    <Label text="Cliente:" design="Bold" class="sapUiSmallMarginEnd"/>
+                                    <Label text="{i18n>tituloColunaNomeDoCliente}" design="Bold" class="sapUiSmallMarginEnd"/>
                                     <Input
                                         width="12rem"
-                                        placeholder="Digite o cliente"
+                                        placeholder="{i18n>placeholderDigiteNomeDoCliente}"
                                         class="sapUiSmallMarginEnd"
-                                        liveChange=".onFilterChange"/>
+                                        value="{filtro>/NomeDoCliente}"/>
                                 
                                     <ToolbarSpacer/>
                                     <Button
                                         icon="sap-icon://filter"
-                                        text="Filtrar"
-                                        press=".onFilterPress"
+                                        text="{i18n>botaoFiltrar}"
+                                        press="aoClicarEmFiltrar"
                                         type="Emphasized"/>
                                 </Toolbar>
                             </content>
-                        </Panel>
-                        
+                        </Panel>                        
                         <Table
                             id="idTabelaNotas"
                             width="auto"
                             items="{listaNotasFiscais>/}"
                             growing="true"
                             growingThreshold="10"
-                            growingScrollToLoad="true">
-                            
+                            growingScrollToLoad="true">                            
                             <columns>
                                 <Column hAlign="Center" width="10rem">
                                     <ObjectIdentifier title="{i18n>tituloColunaNumero}" />
@@ -107,13 +102,11 @@
                                 <Column hAlign="Center" width="8rem">
                                     <ObjectIdentifier title="{i18n>tituloColunaInscricaoDoCliente}" />
                                 </Column>
-                            </columns>
-                            
+                            </columns>                            
                             <items>
                                 <ColumnListItem
                                     type="Navigation"
                                     press="aoSelecionarItemNaLista">
-                                    
                                     <cells>
                                         <ObjectIdentifier title="{listaNotasFiscais>Numero}" />
                                         <ObjectIdentifier text="{listaNotasFiscais>DataEmissao}" />
@@ -125,28 +118,25 @@
                                     </cells>
                                 </ColumnListItem>
                             </items>
-                        </Table>
-                        
+                        </Table>                        
                         <HBox justifyContent="End" class="sapUiSmallMarginBeginEnd">
                             <Button
                                 type="Emphasized"
                                 icon="sap-icon://add"
-                                text="Adicionar"
+                                text="{i18n>botaoAdicionar}"
                                 press="aoClicarAbrirCadastro"
-                                tooltip="Adicionar Nota Fiscal"/>
+                                tooltip="{i18n>tooltipAdicionarNotaFiscal}"/>
                         </HBox>
                     </content>
                 </Panel>
             </Page>
-        </f:beginColumnPages>
-        
+        </f:beginColumnPages>        
         <f:midColumnPages>
             <Page
             id="detailPage"
             title="Detalhes da Nota Fiscal"
             showHeader="true"
-            showNavButton="true"
-            navButtonPress=".onNavBack">
+            showNavButton="true">
             <headerContent>
                 <Button 
                 icon="sap-icon://decline"
@@ -162,8 +152,7 @@
                     number="{notaFiscalSelecionada>/Valor}"
                     numberUnit="BRL"
                     responsive="true"
-                    backgroundDesign="Translucent">
-                    
+                    backgroundDesign="Translucent">                    
                     <attributes>
                         <ObjectAttribute
                             title="Data de Emissão"
@@ -188,7 +177,6 @@
                 </ObjectHeader>
             </content>
         </Page>
-        </f:midColumnPages>
-        
+        </f:midColumnPages>        
     </f:FlexibleColumnLayout>
 </mvc:View>
