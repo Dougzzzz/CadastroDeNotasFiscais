@@ -5,134 +5,128 @@
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true">
     <Page title="{i18n>tituloTelaListagem}">
+        
         <Panel
             class="sapUiResponsiveMargin"
             width="auto"
             accessibleRole="Region"
             stickyHeader="true">
-            <headerToolbar>
-                <Toolbar
-                    style="Clear"
-                    class="sapUiTinyMarginEnd">
-                    <ToolbarSpacer />
-                    <SearchField
-                        placeholder="{i18n>placeholderCampoPesquisaFiltro}"
-                        width="30%"
-                        search=".aoPesquisarFiltrarNotas" />
+            <content>
+                <Panel
+                    id="filterPanel"
+                    headerText="Filtros"
+                    expandable="true"
+                    expanded="false"
+                    class="sapUiResponsiveMargin">
+                    <content>
+                        <Toolbar>
+                            <Label text="Número:" design="Bold" class="sapUiSmallMarginEnd"/>
+                            <Input
+                                width="10rem"
+                                placeholder="Digite o número"
+                                class="sapUiSmallMarginEnd"
+                                liveChange=".onFilterChange"/>
+                        
+                            <Label text="Data de Emissão:" design="Bold" class="sapUiSmallMarginEnd"/>
+                            <DatePicker
+                                width="10rem"
+                                placeholder="Selecione a data"
+                                class="sapUiSmallMarginEnd"
+                                change=".onFilterChange"/>
+                        
+                            <Label text="Fornecedor:" design="Bold" class="sapUiSmallMarginEnd"/>
+                            <Input
+                                width="12rem"
+                                placeholder="Digite o fornecedor"
+                                class="sapUiSmallMarginEnd"
+                                liveChange=".onFilterChange"/>
+                        
+                            <Label text="Cliente:" design="Bold" class="sapUiSmallMarginEnd"/>
+                            <Input
+                                width="12rem"
+                                placeholder="Digite o cliente"
+                                class="sapUiSmallMarginEnd"
+                                liveChange=".onFilterChange"/>
+                        
+                            <ToolbarSpacer/>
+                            <Button
+                                icon="sap-icon://filter"
+                                text="Filtrar"
+                                press=".onFilterPress"
+                                type="Emphasized"/>
+                        </Toolbar>
+                    </content>
+                </Panel>
+                <Table
+                    id="idTabelaNotas"
+                    width="auto"
+                    items="{listaNotasFiscais>/}"
+                    growing="true"
+                    growingThreshold="10"
+                    growingScrollToLoad="true">
+                    <columns>
+                        <Column
+                            hAlign="Center"
+                            width="10rem">
+                            <ObjectIdentifier title="{i18n>tituloColunaNumero}" />
+                        </Column>
+                        <Column
+                            hAlign="Center"
+                            width="10rem">
+                            <ObjectIdentifier title="{i18n>tituloColunaDataDeEmissao}" />
+                        </Column>
+                        <Column
+                            hAlign="Center"
+                            width="10rem">
+                            <ObjectIdentifier title="{i18n>tituloColunaValor}" />
+                        </Column>
+                        <Column
+                            hAlign="Center"
+                            width="4rem">
+                            <ObjectIdentifier title="{i18n>tituloColunaNomeDoFornecedor}" />
+                        </Column>
+                        <Column
+                            hAlign="Center"
+                            width="7rem">
+                            <ObjectIdentifier title="{i18n>tituloColunaInscricaoDoFornecedor}" />
+                        </Column>
+                        <Column
+                            hAlign="Center"
+                            width="8rem">
+                            <ObjectIdentifier title="{i18n>tituloColunaNomeDoCliente}" />
+                        </Column>
+                        <Column
+                            hAlign="Center"
+                            width="8rem">
+                            <ObjectIdentifier title="{i18n>tituloColunaInscricaoDoCliente}" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem
+                            type="Navigation"
+                            press=".aoClicarAbrirDetalhes">
+                            <cells>
+                                <ObjectIdentifier title="{listaNotasFiscais>Numero}" />
+                                <ObjectIdentifier text="{listaNotasFiscais>DataEmissao}" />
+                                <ObjectIdentifier text="{listaNotasFiscais>Valor}" />
+                                <ObjectIdentifier text="{listaNotasFiscais>Fornecedor/Nome}" />
+                                <ObjectIdentifier text="{listaNotasFiscais>Fornecedor/Inscricao}" />
+                                <ObjectIdentifier text="{listaNotasFiscais>Cliente/Nome}" />
+                                <ObjectIdentifier text="{listaNotasFiscais>Cliente/Inscricao}" />                            
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+                <HBox justifyContent="End" class="sapUiSmallMarginBeginEnd">
                     <Button
                         type="Emphasized"
                         icon="sap-icon://add"
-                        press=".aoClicarAbrirCadastro" />
-                </Toolbar>
-            </headerToolbar>
-            <Table
-                id="idTabelaNotas"
-                width="auto"
-                items="{listaNotasFiscais>/}"
-                growing="true"
-                growingThreshold="10"
-                growingScrollToLoad="true">
-                <columns>
-                    <Column
-                        hAlign="Center"
-                        width="10rem">
-                        <ObjectIdentifier title="{i18n>tituloColunaNome}" />
-                    </Column>
-                    <Column
-                        hAlign="Center"
-                        width="10rem">
-                        <ObjectIdentifier title="{i18n>tituloColunaCpf}" />
-                    </Column>
-                    <Column
-                        hAlign="Center"
-                        width="10rem">
-                        <ObjectIdentifier title="{i18n>tituloColunaTelefone}" />
-                    </Column>
-                    <Column
-                        hAlign="Center"
-                        width="4rem">
-                        <ObjectIdentifier title="{i18n>tituloColunaIdade}" />
-                    </Column>
-                    <Column
-                        hAlign="Center"
-                        width="7rem">
-                        <ObjectIdentifier title="{i18n>tituloColunaSexo}" />
-                    </Column>
-                    <Column
-                        hAlign="Center"
-                        width="8rem">
-                        <ObjectIdentifier title="{i18n>tituloColunaCheckIn}" />
-                    </Column>
-                    <Column
-                        hAlign="Center"
-                        width="8rem">
-                        <ObjectIdentifier title="{i18n>tituloColunaCheckOut}" />
-                    </Column>
-                    <Column
-                        hAlign="Center"
-                        width="9rem">
-                        <ObjectIdentifier title="{i18n>tituloColunaPrecoEstadia}" />
-                    </Column>
-                    <Column
-                        hAlign="Center">
-                        <ObjectIdentifier title="{i18n>tituloColunaPagamentoEfetuado}" />
-                    </Column>
-                </columns>
-                <items>
-                    <ColumnListItem
-                        type="Navigation"
-                        press=".aoClicarAbrirDetalhes">
-                        <cells>
-                            <ObjectIdentifier title="{listaNotasFiscais>Numero}" />
-                            <ObjectIdentifier title="{listaNotasFiscais>DataEmissao}" />
-                            <Text text="{TabelaReservas>Valor}" />
-                            <Text text="{TabelaReservas>idade}" />
-                            <Text
-                                text="{
-                                        path: 'TabelaReservas>sexo',
-                                        formatter: '.formatter.formataSexo'
-                                }"
-                            />
-                            <Text
-                                text="{
-                                path: 'TabelaReservas>checkIn',
-                                type: 'sap.ui.model.type.Date',
-                                formatOptions: {
-                                    style: 'short',
-                                    source: {
-                                        pattern: 'yyyy-MM-ddTHH:mm:ss'
-                                    }
-                                }
-                            }"
-                            />
-                            <Text
-                                text="{
-                                path: 'TabelaReservas>checkOut',
-                                type: 'sap.ui.model.type.Date',
-                                formatOptions: {
-                                    style: 'short',
-                                    source: {
-                                        pattern: 'yyyy-MM-ddTHH:mm:ss'
-                                    }
-                                }
-                            }"
-                            />
-                            <Text
-                                text="{
-                                    path: 'TabelaReservas>precoEstadia',
-                                    formatter: '.formatter.formataPrecoEstadia'
-                                }"
-                            />
-                            <Text
-                                text="{
-                                    path: 'TabelaReservas>pagamentoEfetuado',
-                                    formatter: '.formatter.formataPagamentoEfetuado'
-                            }"
-                            />
-                        </cells>
-                    </ColumnListItem>
-                </items>
-            </Table>
+                        text="Adicionar"
+                        press=".aoClicarAbrirCadastro"
+                        tooltip="Adicionar Nota Fiscal"/>
+                </HBox>
+            </content>
+            
         </Panel>
     </Page>
 </mvc:View>
