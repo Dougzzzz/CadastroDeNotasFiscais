@@ -2,8 +2,9 @@ sap.ui.define([
     "./BaseController",
     "../model/Formatter",
     "../Repositorios/RepositorioNotasFiscais",
-    "sap/m/MessageBox"
-], (BaseController, Formatter, RepositorioNotasFiscais, MessageBox) => {
+    "sap/m/MessageBox",
+    'sap/f/library'
+], (BaseController, Formatter, RepositorioNotasFiscais, MessageBox,library) => {
     "use strict";
 
     const CAMINHO_ROTA_LISTAGEM = "cadastroNotas.controller.Listagem";
@@ -35,6 +36,15 @@ sap.ui.define([
             catch (erro) {
                 MessageBox.warning(erro.message);
             }
+        },
+
+        aoSelecionarItemNaLista: function (evento) {            
+            this.exibirEspera(() => {
+                let notaFiscalSelecionada = evento.getSource().getBindingContext(MODELO_LISTA).getObject();
+                this.modelo("notaFiscalSelecionada", notaFiscalSelecionada);
+                this.byId("flexibleColumnLayoutNotasFiscais").setLayout(sap.f.LayoutType.TwoColumnsBeginExpanded);
+            });
+            
         },
 
         aoPesquisarFiltrarNotas(filtro) {
