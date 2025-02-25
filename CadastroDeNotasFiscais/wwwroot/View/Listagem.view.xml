@@ -132,7 +132,7 @@
                                 type="Emphasized"
                                 icon="sap-icon://add"
                                 text="Adicionar"
-                                press=".aoClicarAbrirCadastro"
+                                press="aoClicarAbrirCadastro"
                                 tooltip="Adicionar Nota Fiscal"/>
                         </HBox>
                     </content>
@@ -147,7 +147,14 @@
             showHeader="true"
             showNavButton="true"
             navButtonPress=".onNavBack">
-            
+            <headerContent>
+                <Button 
+                icon="sap-icon://decline"
+                press="aoClicarEmFecharDetalhes"
+                tooltip="Fechar Detalhes"
+                class="sapUiSmallMarginEnd"
+                />
+            </headerContent>
             <content>
                 <ObjectHeader
                     id="notaFiscalHeader"

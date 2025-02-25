@@ -47,6 +47,10 @@ sap.ui.define([
             
         },
 
+        aoClicarEmFecharDetalhes(){
+            this.byId("flexibleColumnLayoutNotasFiscais").setLayout(sap.f.LayoutType.OneColumn);
+        },
+
         aoPesquisarFiltrarNotas(filtro) {
             this.exibirEspera(() => {
                 const parametroQuery = "query";
