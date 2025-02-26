@@ -67,7 +67,7 @@
                                     <ToolbarSpacer/>
                                     <Button
                                         icon="sap-icon://filter"
-                                        text="{i18n>botaoFiltrar}"
+                                        text="{i18n>textoBotaoFiltrar}"
                                         press="aoClicarEmFiltrar"
                                         type="Emphasized"/>
                                 </Toolbar>
@@ -123,8 +123,8 @@
                             <Button
                                 type="Emphasized"
                                 icon="sap-icon://add"
-                                text="{i18n>botaoAdicionar}"
-                                press="aoClicarAbrirCadastro"
+                                text="{i18n>tituloBotaoAdicionar}"
+                                press="aoClicarEmAdicionar"
                                 tooltip="{i18n>tooltipAdicionarNotaFiscal}"/>
                         </HBox>
                     </content>

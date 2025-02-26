@@ -1,152 +1,74 @@
 <mvc:View
     controllerName="cadastroNotas.controller.Cadastro"
-    xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns:core="sap.ui.core"
-    displayBlock="true">
-    <Page>
-        <customHeader>
-            <Toolbar>
-                <Button
-                    icon="sap-icon://nav-back"
-                    press=".aoClicarNavegarParaTelaAnterior"
-                    type="Transparent" />
-                <ToolbarSpacer width="42vw" />
-                <ObjectIdentifier id="tituloTelaCadastro" />
-                <ToolbarSpacer />
-                <Button
-                    class="sapUiTinyMarginEnd"
-                    icon="sap-icon://decline"
-                    text="{i18n>tituloBotaoCancelar}"
-                    type="Transparent"
-                    press=".aoClicarCancelarCadastro" />
-                <Button
-                    icon="sap-icon://save"
-                    text="{i18n>tituloBotaoSalvar}"
-                    type="Emphasized"
-                    press=".aoClicarSalvarReserva" />
-            </Toolbar>
-        </customHeader>
-        <Panel
-            backgroundDesign="Transparent">
-            <FlexBox
-                class="sapUiSmallMargin">
-                <VBox
-                    class="sapUiSmallMargin"
-                    width="50%">
-                    <Label
-                        text="{i18n>labelNome}"
-                        labelFor="inputNome" />
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+
+    <Page title="{i18n>tituloTelaCadastro}">
+        <content>
+            <f:SimpleForm
+                editable="true"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="4"
+                labelSpanL="4"
+                labelSpanM="4"
+                labelSpanS="12"
+                adjustLabelSpan="false"
+                emptySpanXL="0"
+                emptySpanL="0"
+                emptySpanM="0"
+                emptySpanS="0"
+                columnsXL="2"
+                columnsL="2"
+                columnsM="2"
+                singleContainerFullSize="false">
+                <f:content>
+                    <Label text="{i18n>textoCampoValor}" />
                     <Input
-                        id="inputNome"
-                        required="true"
-                        placeholder="{i18n>placeholderNome}"
-                        showClearIcon="true"
-                        value="{reserva>/nome}"
-                        change=".aoMudarValidarNome" />
-                    <Label
-                        text="{i18n>labelCpf}"
-                        labelFor="inputCpf" />
-                    <MaskInput
-                        id="inputCpf"
-                        required="true"
-                        width="100%"
-                        mask="{i18n>mascaraCpf}"
-                        placeholderSymbol="{i18n>simboloPlaceholder}"
-                        placeholder="{i18n>placeholderCpf}"
-                        showClearIcon="true"
-                        value="{reserva>/cpf}"
-                        change=".aoMudarValidarCpf" />
-                    <Label
-                        text="{i18n>labelTelefone}"
-                        labelFor="inputTelefone" />
-                    <MaskInput
-                        id="inputTelefone"
-                        required="true"
-                        width="100%"
-                        mask="{i18n>mascaraTelefone}"
-                        placeholderSymbol="{i18n>simboloPlaceholder}"
-                        placeholder="{i18n>placeholderTelefone}"
-                        showClearIcon="true"
-                        value="{reserva>/telefone}"
-                        change=".aoMudarValidarTelefone" />
-                    <Label
-                        text="{i18n>labelIdade}"
-                        labelFor="inputIdade" />
-                    <Input
+                        value="{notaFiscal>/Valor}"
                         type="Number"
-                        maxLength="3"
-                        id="inputIdade"
-                        required="true"
-                        placeholder="{i18n>placeholderIdade}"
-                        showClearIcon="true"
-                        value="{reserva>/idade}"
-                        change=".aoMudarValidarIdade" />
-                    <Label
-                        text="{i18n>labelPagamentoEfetuado}"
+                        placeholder="Digite o valor"
+                        liveChange="onLiveChange"
                         required="true" />
-                    <RadioButtonGroup
-                        columns="2">
-                        <RadioButton
-                            id="radioButtonPagamentoEfetuado"
-                            text="{i18n>radioButtonSim}"
-                            selected="{reserva>/pagamentoEfetuado}" />
-                        <RadioButton
-                            id="radioButtonPagamentoNaoEfetuado"
-                            text="{i18n>radioButtonNao}" />
-                    </RadioButtonGroup>
-                </VBox>
-                <VBox
-                    width="50%"
-                    class="sapUiSmallMargin">
-                    <Label
-                        text="{i18n>labelSexo}"
-                        labelFor="comboBoxSexo" />
-                    <Select
-                        id="comboBoxSexo"
-                        required="true"
-                        width="100%"
-                        selectedKey="{reserva>/sexo}"
-                        change=".aoMudarValidarSexo">
-                        <core:ListItem key="0" text="{i18n>sexoMasculino}" />
-                        <core:ListItem key="1" text="{i18n>sexoFeminino}" />
-                    </Select>
-                    <Label
-                        text="{i18n>labelCheckIn}"
-                        labelFor="inputCheckIn" />
+
+                    <Label text="{i18n>textoCampoNomeDoFornecedor}" />
                     <Input
-                        id="inputCheckIn"
-                        required="true"
-                        type="Date"
-                        value="{
-                            path: 'reserva>/checkIn',
-                            formatter: '.formatter.formataData'
-                        }"
-                        change=".aoMudarValidarCheckInECheckOut" />
-                    <Label
-                        text="{i18n>labelCheckOut}"
-                        labelFor="inputCheckOut" />
+                        value="{notaFiscal>Fornecedor/NomeFornecedor}"
+                        placeholder="Digite o nome do fornecedor"
+                        required="true" />
+
+                    <Label text="{i18n>textoCampoInscricaoDoFornecedor}" />
                     <Input
-                        id="inputCheckOut"
-                        required="true"
-                        type="Date"
-                        value="{
-                            path: 'reserva>/checkOut',
-                            formatter: '.formatter.formataData'
-                        }"
-                        change=".aoMudarValidarCheckInECheckOut" />
-                    <Label
-                        text="{i18n>labelPrecoEstadia}"
-                        labelFor="inputPrecoEstadia" />
+                        value="{notaFiscal>Fornecedor/InscricaoFornecedor}"
+                        placeholder="Digite a inscrição do fornecedor"
+                        required="true" />
+
+                    <Label text="{i18n>textoCampoNomeDoCliente}" />
                     <Input
-                        id="inputPrecoEstadia"
-                        placeholder="{i18n>placeholderPrecoEstadia}"
-                        required="true"
-                        value="{reserva>/precoEstadia}"
-                        change=".aoMudarValidarPrecoEstadia"
-                        liveChange=".aoDigitarPermitirSomenteNumeros" />
-                </VBox>
-            </FlexBox>
-        </Panel>
+                        value="{notaFiscal>Cliente/NomeCliente}"
+                        placeholder="Digite o nome do cliente"
+                        required="true" />
+
+                    <Label text="{i18n>textoCampoInscricaoDoCliente}" />
+                    <Input
+                        value="{notaFiscal>Cliente/InscricaoCliente}"
+                        placeholder="Digite a inscrição do cliente"
+                        required="true" />
+                </f:content>
+            </f:SimpleForm>
+
+            <Button
+                text="Cancelar"
+                type="Neutral"
+                press="aoClicarCancelarCadastro"
+                class="sapUiSmallMarginTop" />
+            <Button
+                text="Salvar"
+                type="Default"
+                press="AoClicarEmSalvar"
+                class="sapUiSmallMarginTop" />
+        </content>
     </Page>
 </mvc:View>
