@@ -60,7 +60,7 @@ sap.ui.define([
             });
         },
 
-        aoClicarAbrirCadastro() {
+        aoClicarEmAdicionar() {
             this.exibirEspera(() => {
                 const rotaCadastro = "cadastro";
                 this.navegarPara(rotaCadastro);
