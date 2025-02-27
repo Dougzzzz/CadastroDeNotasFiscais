@@ -116,9 +116,15 @@
                                         <ObjectIdentifier text="{listaNotasFiscais>DataEmissao}" />
                                         <ObjectIdentifier text="{listaNotasFiscais>Valor}" />
                                         <ObjectIdentifier text="{listaNotasFiscais>Fornecedor/Nome}" />
-                                        <ObjectIdentifier text="{listaNotasFiscais>Fornecedor/Inscricao}" />
+                                        <ObjectIdentifier text="{
+                                            path: 'listaNotasFiscais>Fornecedor/Inscricao',
+                                            formatter: '.formatter.formatadorDeCpfOuCnpj'}" 
+                                        />
                                         <ObjectIdentifier text="{listaNotasFiscais>Cliente/Nome}" />
-                                        <ObjectIdentifier text="{listaNotasFiscais>Cliente/Inscricao}" />                            
+                                        <ObjectIdentifier text="{
+                                            path: 'listaNotasFiscais>Cliente/Inscricao', 
+                                            formatter: '.formatter.formatadorDeCpfOuCnpj'}" 
+                                        />
                                     </cells>
                                 </ColumnListItem>
                             </items>
@@ -137,7 +143,6 @@
         </f:beginColumnPages>        
         <f:midColumnPages>
             <Page
-            id="detailPage"
             title="Detalhes da Nota Fiscal"
             showHeader="true">
             <headerContent>
@@ -167,7 +172,9 @@
                         
                         <ObjectAttribute
                             title="Inscrição do Fornecedor"
-                            text="{notaFiscalSelecionada>/Fornecedor/Inscricao}"/>
+                            text="{ path: 'notaFiscalSelecionada>/Fornecedor/Inscricao',
+                                    formatter: '.formatter.formatadorDeCpfOuCnpj'}"
+                        />
                         
                         <ObjectAttribute
                             title="Cliente"
@@ -175,7 +182,9 @@
                         
                         <ObjectAttribute
                             title="Inscrição do Cliente"
-                            text="{notaFiscalSelecionada>/Cliente/Inscricao}"/>
+                            text="{path: 'notaFiscalSelecionada>/Cliente/Inscricao',
+                                    formatter: '.formatter.formatadorDeCpfOuCnpj'}"
+                        />
                     </attributes>
                 </ObjectHeader>
             </content>
