@@ -50,7 +50,6 @@ sap.ui.define([
                 const recursosI18n = this.obterRecursosI18n();
 
                 const caminhosValidacao = [
-                    { caminho: "/Valor", mensagemI18n: "msgValorObrigatorio", input: this.byId("inputValor") },
                     { caminho: "/Fornecedor/Nome", mensagemI18n: "msgNomeFornecedorObrigatorio", input: this.byId("inputNomeFornecedor") },
                     { caminho: "/Fornecedor/Inscricao", mensagemI18n: "msgInscricaoFornecedorObrigatorio", input: this.byId("inputInscricaoFornecedor") },
                     { caminho: "/Cliente/Nome", mensagemI18n: "msgNomeClienteObrigatorio", input: this.byId("inputNomeCliente") },
