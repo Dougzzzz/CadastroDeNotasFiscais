@@ -3,99 +3,89 @@ sap.ui.define([
     "../model/Formatter",
     "../Repositorios/RepositorioNotasFiscais",
     "sap/m/MessageBox",
-    "../Services/Validacao",
+    "../Services/ValidacaoNotaFiscal",
     "sap/ui/core/library"
-], (BaseController, Formatter, RepositorioNotasFiscais, MessageBox, Validacao, library) => {
+], function (BaseController, Formatter, RepositorioNotasFiscais, MessageBox, ValidacaoNotaFiscal, library) {
     "use strict";
 
     const CAMINHO_ROTA_CADASTRO = "cadastroNotas.controller.Cadastro";
-    const PARAMETRO_VALUE = "value";
 
     return BaseController.extend(CAMINHO_ROTA_CADASTRO, {
         formatter: Formatter,
 
         onInit() {
             const rotaCadastro = "cadastro";
-
-            // Validacao.definirRecursosi18n(this.obterRecursosI18n());
             this.vincularRota(rotaCadastro, this._aoCoincidirRotaCadastro);
         },
 
         _aoCoincidirRotaCadastro() {
             this.exibirEspera(() => {
-                // this._definirTituloTelaCadastro();
-                // this._limparValueStateInputs();
-                // this._definirValorPadraoRadioButton();
-                // this._definirModeloPadraoCadastro();
+                this._definirModeloPadraoCadastro();
             });
         },
 
+        _definirModeloPadraoCadastro() {
+            const modeloPadrao = {
+                Valor: "",
+                Fornecedor: {
+                    NomeFornecedor: "",
+                    InscricaoFornecedor: ""
+                },
+                Cliente: {
+                    NomeCliente: "",
+                    InscricaoCliente: ""
+                }
+            };
+            this.modelo("notaFiscal", modeloPadrao);
+        },
+
+        _obterNotaFiscalPreenchida() {
+            return this.modelo("notaFiscal");
+        },
+
+        aoClicarSalvarNotaFiscal() {
+            this.exibirEspera(() => {
+                const notaFiscal = this._obterNotaFiscalPreenchida();
+                const modelo = this.modelo("notaFiscal");
+                const recursosI18n = this.obterRecursosI18n();
+
+                const caminhosValidacao = [
+                    { caminho: "/Valor", mensagemI18n: "msgValorObrigatorio", input: this.byId("inputValor") },
+                    { caminho: "/Fornecedor/Nome", mensagemI18n: "msgNomeFornecedorObrigatorio", input: this.byId("inputNomeFornecedor") },
+                    { caminho: "/Fornecedor/Inscricao", mensagemI18n: "msgInscricaoFornecedorObrigatorio", input: this.byId("inputInscricaoFornecedor") },
+                    { caminho: "/Cliente/Nome", mensagemI18n: "msgNomeClienteObrigatorio", input: this.byId("inputNomeCliente") },
+                    { caminho: "/Cliente/Inscricao", mensagemI18n: "msgInscricaoClienteObrigatorio", input: this.byId("inputInscricaoCliente") }
+                ];
+
+                const erros = ValidacaoNotaFiscal.validarCamposObrigatorios(modelo, caminhosValidacao, recursosI18n);
+
+                if (erros.length > 0) {
+                    MessageBox.error(erros.join("\n"));
+                    return; 
+                }
+
+                this._salvar(notaFiscal);
+            });
+        },
+
+        _salvar(notaFiscal) {
+            try {
+                RepositorioNotasFiscais.adicionarNotaFiscal(notaFiscal)
+                    .then(response => {
+                        return response.ok
+                            ? response.json()
+                            : Promise.reject(response);
+                    })
+                    .then(() => this._navegarParaTelaListagem())
+                    .catch(async erro => MessageBox.warning(await erro.text()));
+            } catch (erro) {
+                MessageBox.warning(erro.message);
+            }
+        },
 
         _navegarParaTelaListagem() {
             const rotaListagem = "listagem";
             this.navegarPara(rotaListagem);
-        },
-
-        _navegarParaDetalhesReserva(id) {
-            const rotaDetalhes = "detalhes";
-            this.navegarPara(rotaDetalhes, id);
-        },
-
-        aoClicarNavegarParaTelaAnterior() {
-            this.exibirEspera(() => {
-                const idReserva = this._modeloReserva().id;
-
-                idReserva
-                    ? this._navegarParaDetalhesReserva(idReserva)
-                    : this._navegarParaTelaListagem();
-            });
-        },
-
-        aoClicarSalvarReserva() {
-            this.exibirEspera(() => {
-                const reservaPreenchida = this._obterReservaPreenchida();
-                Validacao.validarReserva(reservaPreenchida);
-
-                const listaErrosValidacao = Validacao.obterListaErros();
-                const mensagensErroValidacao = Formatter.formataListaErros(listaErrosValidacao);
-                this._definirValueStateInputsSemAlteracao(listaErrosValidacao);
-
-                mensagensErroValidacao
-                    ? MessageBox.warning(mensagensErroValidacao)
-                    : reservaPreenchida.id
-                        ? this._atualizarReserva(reservaPreenchida)
-                        : this._criarReserva(reservaPreenchida);
-            });
-        },
-
-        aoClicarCancelarCadastro() {
-            this.exibirEspera(() => {
-                const confirmacaoCancelar = "confirmacaoCancelar";
-                const mensagemConfirmacao = this.obterRecursosI18n().getText(confirmacaoCancelar);
-
-                this.messageBoxConfirmacao(mensagemConfirmacao, () => this._navegarParaTelaListagem());
-            });
-        },
-
-        aoMudarValidarNome(evento) {
-            this.exibirEspera(() => {
-                const inputNome = evento.getSource();
-                const valorNome = evento.getParameter(PARAMETRO_VALUE);
-                const mensagemErroValidacao = Validacao.validarNome(valorNome);
-
-                this._definirValueStateInputValidado(inputNome, mensagemErroValidacao);
-            })
-        },
-
-        aoMudarValidarCpf(evento) {
-            this.exibirEspera(() => {
-                const inputCpf = evento.getSource();
-                const valorCpf = evento.getParameter(PARAMETRO_VALUE);
-                const mensagemErroValidacao = Validacao.validarCpf(valorCpf);
-
-                this._definirValueStateInputValidado(inputCpf, mensagemErroValidacao);
-            })
-        },
-
-    })
-})
+        }
+    });
+});
