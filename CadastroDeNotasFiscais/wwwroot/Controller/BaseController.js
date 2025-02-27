@@ -12,7 +12,7 @@ sap.ui.define([
         modelo(nome, modelo) {
             return modelo
                 ? this.getView().setModel(new JSONModel(modelo), nome)
-                : this.getView().getModel(nome).getData();
+                : this.getView().getModel(nome)?.getData();
         },
 
         obterRecursosI18n() {
