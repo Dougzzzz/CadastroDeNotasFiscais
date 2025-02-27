@@ -11,63 +11,55 @@
             <f:SimpleForm
                 editable="true"
                 layout="ResponsiveGridLayout"
-                labelSpanXL="4"
-                labelSpanL="4"
-                labelSpanM="4"
-                labelSpanS="12"
-                adjustLabelSpan="false"
-                emptySpanXL="0"
-                emptySpanL="0"
-                emptySpanM="0"
-                emptySpanS="0"
-                columnsXL="2"
-                columnsL="2"
-                columnsM="2"
-                singleContainerFullSize="false">
+                >
                 <f:content>
                     <Label text="{i18n>textoCampoValor}" />
                     <Input
+                        id="inputValor"
                         value="{notaFiscal>/Valor}"
                         type="Number"
-                        placeholder="Digite o valor"
-                        liveChange="onLiveChange"
+                        placeholder="{i18n>placeholderDigiteUmValor}"
                         required="true" />
 
                     <Label text="{i18n>textoCampoNomeDoFornecedor}" />
                     <Input
-                        value="{notaFiscal>Fornecedor/NomeFornecedor}"
-                        placeholder="Digite o nome do fornecedor"
+                        id="inputNomeFornecedor"
+                        value="{notaFiscal>/Fornecedor/Nome}"
+                        placeholder="{i18n>placeholderDigiteNomeDoFornecedor}"
                         required="true" />
 
                     <Label text="{i18n>textoCampoInscricaoDoFornecedor}" />
                     <Input
-                        value="{notaFiscal>Fornecedor/InscricaoFornecedor}"
-                        placeholder="Digite a inscrição do fornecedor"
+                        id="inputInscricaoFornecedor"
+                        value="{notaFiscal>/Fornecedor/Inscricao}"
+                        placeholder="{i18n>placeholderDigiteIncricaoDoFornecedor}"
                         required="true" />
 
                     <Label text="{i18n>textoCampoNomeDoCliente}" />
                     <Input
-                        value="{notaFiscal>Cliente/NomeCliente}"
-                        placeholder="Digite o nome do cliente"
+                        id="inputNomeCliente"
+                        value="{notaFiscal>/Cliente/Nome}"
+                        placeholder="{i18n>placeholderDigiteNomeDoCliente}"
                         required="true" />
 
                     <Label text="{i18n>textoCampoInscricaoDoCliente}" />
                     <Input
-                        value="{notaFiscal>Cliente/InscricaoCliente}"
-                        placeholder="Digite a inscrição do cliente"
+                        id="inputInscricaoCliente"
+                        value="{notaFiscal>/Cliente/Inscricao}"
+                        placeholder="{i18n>placeholderDigiteIncricaoDoCliente}"
                         required="true" />
                 </f:content>
             </f:SimpleForm>
 
             <Button
-                text="Cancelar"
-                type="Neutral"
+                text="{i18n>botaoCancelar}"
+                type="Ghost"
                 press="aoClicarCancelarCadastro"
                 class="sapUiSmallMarginTop" />
             <Button
-                text="Salvar"
+                text="{i18n>botaoSalvar}"
                 type="Default"
-                press="AoClicarEmSalvar"
+                press="aoClicarSalvarNotaFiscal"
                 class="sapUiSmallMarginTop" />
         </content>
     </Page>
