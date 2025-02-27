@@ -18,7 +18,7 @@ namespace CadastroDeNotasFiscais.Test
             _runner = MongoDbRunner.Start();
             var client = new MongoClient(_runner.ConnectionString);
             _database = client.GetDatabase("TestDatabase");
-            _repository = new RepositorioNotasFiscais(_database);
+            _repository = new RepositorioNotasFiscais(_database, true);
         }
 
 

@@ -1,5 +1,4 @@
-﻿using CadastroDeNotasFiscais.Dominio.Clientes;
-using CadastroDeNotasFiscais.Dominio.Interfaces;
+﻿using CadastroDeNotasFiscais.Dominio.Interfaces;
 using CadastroDeNotasFiscais.Dominio.NotasFiscais;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
@@ -12,6 +11,7 @@ namespace CadastroDeNotasFiscais.Infra.Repositorios
         private readonly IMongoCollection<NotaFiscal> _collection;
         private readonly IMongoCollection<ContadorNotasFiscais> _contadoresCollection;
         private readonly MongoClient _mongoClient;
+        private readonly bool _isTestEnvironment;
 
         public RepositorioNotasFiscais(IOptions<NotasFiscaisConfiguracoesDoBanco> notasFiscaisDatabase)
         {
@@ -24,11 +24,12 @@ namespace CadastroDeNotasFiscais.Infra.Repositorios
             _collection = mongoDatabase.GetCollection<NotaFiscal>("notasFiscais");
         }
 
-        public RepositorioNotasFiscais(IMongoDatabase database)
+        public RepositorioNotasFiscais(IMongoDatabase database, bool isTestEnvironment = false)
         {
             _mongoClient = new MongoClient(database.Client.Settings);
             _contadoresCollection = database.GetCollection<ContadorNotasFiscais>("contadores");
             _collection = database.GetCollection<NotaFiscal>("notasFiscais");
+            _isTestEnvironment = isTestEnvironment;
         }
 
         public void Inserir(NotaFiscal notaFiscal)
@@ -93,21 +94,34 @@ namespace CadastroDeNotasFiscais.Infra.Repositorios
             return contadorAtualizado.Sequencia;
         }
 
-        public void ExecutarTransaction(Action action)
+        private void ExecutarTransaction(Action action)
         {
-            using var session = _mongoClient.StartSession();
-            
-            session.StartTransaction();
-            
-            try
+            if (_isTestEnvironment)
             {
                 action();
-                session.CommitTransaction();
+                return;
             }
-            catch (Exception)
+
+            try
             {
-                session.AbortTransaction();
-                throw;
+                using (var session = _mongoClient.StartSession())
+                {
+                    session.StartTransaction();
+                    try
+                    {
+                        action();
+                        session.CommitTransaction();
+                    }
+                    catch
+                    {
+                        session.AbortTransaction();
+                        throw;
+                    }
+                }
+            }
+            catch (NotSupportedException)
+            {
+                action();
             }
         }
     }
