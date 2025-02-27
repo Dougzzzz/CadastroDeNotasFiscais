@@ -135,8 +135,7 @@
             <Page
             id="detailPage"
             title="Detalhes da Nota Fiscal"
-            showHeader="true"
-            showNavButton="true">
+            showHeader="true">
             <headerContent>
                 <Button 
                 icon="sap-icon://decline"

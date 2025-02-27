@@ -16,8 +16,16 @@
                     <Label text="{i18n>textoCampoValor}" />
                     <Input
                         id="inputValor"
-                        value="{notaFiscal>/Valor}"
-                        type="Number"
+                        value="{
+                            path: 'notaFiscal>/Valor',
+                            type: 'sap.ui.model.type.Float',
+                            formatOptions: {
+                                decimals: '2'
+                            },
+                            constraints:{
+                                minimum:0
+                            }
+                        }"
                         placeholder="{i18n>placeholderDigiteUmValor}"
                         required="true" />
 

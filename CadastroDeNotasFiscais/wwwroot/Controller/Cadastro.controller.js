@@ -46,7 +46,7 @@ sap.ui.define([
         aoClicarSalvarNotaFiscal() {
             this.exibirEspera(() => {
                 const notaFiscal = this._obterNotaFiscalPreenchida();
-                const modelo = this.modelo("notaFiscal");
+                const modelo = this.getView()?.getModel("notaFiscal");
                 const recursosI18n = this.obterRecursosI18n();
 
                 const caminhosValidacao = [
@@ -65,6 +65,12 @@ sap.ui.define([
                 }
 
                 this._salvar(notaFiscal);
+            });
+        },
+
+        aoClicarCancelarCadastro() {
+            this.exibirEspera(() => {
+                this._navegarParaTelaListagem();
             });
         },
 

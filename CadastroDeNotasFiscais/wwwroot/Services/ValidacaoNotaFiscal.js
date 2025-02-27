@@ -4,7 +4,6 @@ sap.ui.define([
 
     return {
         validarCamposObrigatorios: function (modelo, caminhos, recursosI18n) {
-            debugger
             const erros = caminhos.map(campo => {
                 const valor = modelo.getProperty(campo.caminho);
                 const input = campo.input;
