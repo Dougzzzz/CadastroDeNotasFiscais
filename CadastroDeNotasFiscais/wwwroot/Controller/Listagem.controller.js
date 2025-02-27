@@ -20,6 +20,7 @@ sap.ui.define([
 
         _aoCoincidirRota() {
             this.exibirEspera(() => this._modeloListaNotas());
+            this._iniciarModeloDoFiltro();
         },
 
         _modeloListaNotas(filtro) {
@@ -38,6 +39,16 @@ sap.ui.define([
             }
         },
 
+        _iniciarModeloDoFiltro() {
+            var filtro = {
+                NumeroDaNota: "",
+                DataEmissao: "",   
+                NomeDoFornecedor: "",
+                NomeDoCliente: ""
+            };
+            return this.modelo("filtro", filtro);
+        },
+
         aoSelecionarItemNaLista: function (evento) {            
             this.exibirEspera(() => {
                 let notaFiscalSelecionada = evento.getSource().getBindingContext(MODELO_LISTA).getObject();
@@ -51,12 +62,18 @@ sap.ui.define([
             this.byId("flexibleColumnLayoutNotasFiscais").setLayout(sap.f.LayoutType.OneColumn);
         },
 
-        aoPesquisarFiltrarNotas(filtro) {
+        aoClicarEmFiltrar() {
             this.exibirEspera(() => {
-                const parametroQuery = "query";
-                const stringFiltro = filtro.getParameter(parametroQuery);
+                let filtro = this.modelo("filtro");
+                filtro = new URLSearchParams(filtro).toString();
+                this._modeloListaNotas(filtro);
+            });
+        },
 
-                this._modeloListaNotas(stringFiltro);
+        aoClicarEmLimparFiltro() {
+            this.exibirEspera(() => {
+                this._iniciarModeloDoFiltro();
+                this._modeloListaNotas();
             });
         },
 

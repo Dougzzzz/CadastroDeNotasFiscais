@@ -7,7 +7,7 @@ sap.ui.define([], () => {
         obterTodos(filtro) {
             let query = ENDPOINT_NOTAS_FISCAIS;
             if (filtro) {
-                query += `?filtro=${filtro}`
+                query += `?${filtro}`;
             }
 
             return fetch(query);

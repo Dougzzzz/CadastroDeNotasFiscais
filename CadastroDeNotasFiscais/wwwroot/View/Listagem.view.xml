@@ -66,6 +66,10 @@
                                 
                                     <ToolbarSpacer/>
                                     <Button
+                                        text="{i18n>textoBotaoLimparFiltros}"
+                                        press="aoClicarEmLimparFiltro"
+                                        type="Emphasized"/>
+                                    <Button
                                         icon="sap-icon://filter"
                                         text="{i18n>textoBotaoFiltrar}"
                                         press="aoClicarEmFiltrar"
