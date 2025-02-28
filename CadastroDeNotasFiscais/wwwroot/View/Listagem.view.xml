@@ -114,7 +114,8 @@
                                     <cells>
                                         <ObjectIdentifier title="{listaNotasFiscais>Numero}" />
                                         <ObjectIdentifier text="{listaNotasFiscais>DataEmissao}" />
-                                        <ObjectIdentifier text="{listaNotasFiscais>Valor}" />
+                                        <ObjectIdentifier text="{path: 'listaNotasFiscais>Valor', 
+                                                                formatter: '.formatter.formatarValor'}" />
                                         <ObjectIdentifier text="{listaNotasFiscais>Fornecedor/Nome}" />
                                         <ObjectIdentifier text="{
                                             path: 'listaNotasFiscais>Fornecedor/Inscricao',
@@ -157,8 +158,8 @@
                 <ObjectHeader
                     id="notaFiscalHeader"
                     title="{notaFiscalSelecionada>/Numero}"
-                    number="{notaFiscalSelecionada>/Valor}"
-                    numberUnit="BRL"
+                    number="{path: 'notaFiscalSelecionada>/Valor',
+                            formatter: '.formatter.formatarValor'}"
                     responsive="true"
                     backgroundDesign="Translucent">                    
                     <attributes>

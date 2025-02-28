@@ -25,6 +25,19 @@ sap.ui.define([
             return valor;
         },
 
+        formatarValor(valor){
+			const oFormat = NumberFormat.getCurrencyInstance({
+				"currencyCode": false,
+				"customCurrencies": {
+					"BRL": {
+						"isoCode": "BRL",
+						"decimals": 2
+					}
+				}
+			});
+			return oFormat.format(valor, "BRL")
+		},
+
         formataData(data) {
             const formatoData = "yyyy-MM-dd";
             return DateFormat.getDateInstance({ pattern: formatoData }).format(new Date(data));
