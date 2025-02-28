@@ -50,7 +50,7 @@ namespace CadastroDeNotasFiscais.Controllers
         [SwaggerOperation(Summary = "Obter uma nota fiscal por ID", Description = "Retorna uma nota fiscal específica com base no ID fornecido.")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(NotaFiscal))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult ObterPorId(string id)
+        public IActionResult ObterPorId([FromRoute] string id)
         {
             try
             {
