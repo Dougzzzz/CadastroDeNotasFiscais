@@ -121,7 +121,7 @@ namespace CadastroDeNotasFiscais.Infra.Repositorios
             }
             catch (NotSupportedException)
             {
-                action();
+                throw;
             }
         }
     }
