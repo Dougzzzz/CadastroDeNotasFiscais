@@ -1,1 +1,20 @@
-<p>lista-de-notas works!</p>
+<table>
+    <thead>
+        <tr>
+            <th>Número</th>
+            <th>Data de Emissão</th>
+            <th>Valor</th>
+            <th>Fornecedor</th>
+            <th>Cliente</th>
+        </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let nota of notasFiscais">
+        <td>{{ nota.Numero }}</td>
+        <td>{{ nota.DataEmissao }}</td>
+        <td>{{ nota.Valor | currency:'BRL' }}</td>
+        <td>{{ nota.Fornecedor.Nome }} ({{ nota.Fornecedor.CNPJ }})</td>
+        <td>{{ nota.Cliente.Nome }} ({{ nota.Cliente.CPF }})</td>
+      </tr>
+    </tbody>
+  </table>
