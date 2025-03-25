@@ -1,4 +1,48 @@
-<table>
+
+<table mat-table [dataSource]="notasFiscais" class="mat-elevation-z8 demo-table">
+
+  <ng-container matColumnDef="demo-numero">
+    <th mat-header-cell *matHeaderCellDef> Número </th>
+    <td mat-cell *matCellDef="let nota"> {{nota.Numero}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="demo-dataEmissao">
+    <th mat-header-cell *matHeaderCellDef> Data de Emissão </th>
+    <td mat-cell *matCellDef="let nota"> {{nota.DataEmissao}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="demo-valor">
+    <th mat-header-cell *matHeaderCellDef> Valor </th>
+    <td mat-cell *matCellDef="let nota"> {{nota.Numero}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="demo-fornecedorNome">
+    <th mat-header-cell *matHeaderCellDef> Fornecedor </th>
+    <td mat-cell *matCellDef="let nota"> {{nota.Fornecedor.Nome}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="demo-fornecedorCNPJ">
+    <th mat-header-cell *matHeaderCellDef> Inscricao </th>
+    <td mat-cell *matCellDef="let nota"> {{nota.Fornecedor.Inscricao}} </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="demo-clienteNome">
+    <th mat-header-cell *matHeaderCellDef> Cliente </th>
+    <td mat-cell *matCellDef="let nota"> {{nota.Cliente.Nome}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="demo-clienteCPF">
+    <th mat-header-cell *matHeaderCellDef> Inscricao </th>
+    <td mat-cell *matCellDef="let nota"> {{nota.Cliente.Inscricao}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+
+<!-- <table class="mat-elevation-z8 demo-table">
     <thead>
         <tr>
             <th>Número</th>
@@ -17,4 +61,4 @@
         <td>{{ nota.Cliente.Nome }} ({{ nota.Cliente.CPF }})</td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
