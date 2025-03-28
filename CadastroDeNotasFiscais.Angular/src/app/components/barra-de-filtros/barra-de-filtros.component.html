@@ -1,0 +1,17 @@
+<mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+        <mat-expansion-panel-header>
+            <mat-panel-title> Filtros </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-form-field appearance="fill" class="filtros">
+            <mat-label>Numero da Nota</mat-label>
+            <input matInput placeholder="Digite o número da nota">
+
+            <mat-label>Data de Emissão</mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="Escolha uma data">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+
+        </mat-form-field>
+    </mat-expansion-panel>
+</mat-accordion>  
