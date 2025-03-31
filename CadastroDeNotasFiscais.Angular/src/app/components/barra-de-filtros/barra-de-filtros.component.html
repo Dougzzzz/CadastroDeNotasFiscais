@@ -1,17 +1,38 @@
 <mat-accordion>
     <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
-        <mat-expansion-panel-header>
-            <mat-panel-title> Filtros </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-form-field appearance="fill" class="filtros">
-            <mat-label>Numero da Nota</mat-label>
-            <input matInput placeholder="Digite o número da nota">
-
-            <mat-label>Data de Emissão</mat-label>
-            <input matInput [matDatepicker]="picker" placeholder="Escolha uma data">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-
+      <mat-expansion-panel-header>
+        <mat-panel-title>Filtros</mat-panel-title>
+      </mat-expansion-panel-header>
+      
+      <div class="filters-container">
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Numero da Nota</mat-label>
+          <input matInput placeholder="Digite o número da nota">
         </mat-form-field>
+        
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Data de Emissão</mat-label>
+          <input matInput [matDatepicker]="picker" placeholder="Escolha uma data">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Nome do Fornecedor</mat-label>
+          <input matInput placeholder="Digite o nome do fornecedor">
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Nome do Cliente</mat-label>
+          <input matInput placeholder="Digite o nome do cliente">
+        </mat-form-field>
+        
+        <div class="button-container">
+          <button mat-raised-button class="clear-button">Clear Filters</button>
+          <button mat-raised-button class="filter-button">
+            <mat-icon>filter_list</mat-icon> Filter
+          </button>
+        </div>
+      </div>
     </mat-expansion-panel>
-</mat-accordion>  
+  </mat-accordion>

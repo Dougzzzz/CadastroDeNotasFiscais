@@ -1,0 +1,36 @@
+
+.filters-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  
+  .filter-field {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 8px;
+  }
+  
+  .button-container {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+    align-items: center;
+  }
+  
+  .clear-button {
+    background-color: transparent;
+    color: #007bff;
+  }
+  
+  .filter-button {
+    background-color: #007bff;
+    color: white;
+    display: flex;
+    align-items: center;
+  }
+  
+  mat-icon {
+    margin-right: 8px;
+  }
