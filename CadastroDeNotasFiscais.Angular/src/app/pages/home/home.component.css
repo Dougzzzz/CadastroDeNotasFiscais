@@ -1,3 +1,17 @@
+.home-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 300px; /* ajuste conforme necessário */
+}
+
 .home-header{
     font-size: larger;
+    text-align: center;
+}
+
+.btn-add {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
 }
