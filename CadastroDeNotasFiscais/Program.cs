@@ -78,7 +78,7 @@ if (Directory.Exists(angularDistPath))
 }
 else
 {
-    Console.WriteLine($"AVISO: Pasta Angular dist não encontrada em: {angularDistPath}");
+    Console.WriteLine($"AVISO: Pasta Angular dist nï¿½o encontrada em: {angularDistPath}");
 }
 
 app.UseCors("AngularPolicy");

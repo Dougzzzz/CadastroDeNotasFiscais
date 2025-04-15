@@ -23,6 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "baseHref": "/angular/",
             "outputPath": "dist/cadastro-de-notas-fiscais.angular",
             "index": "src/index.html",
             "browser": "src/main.ts",
