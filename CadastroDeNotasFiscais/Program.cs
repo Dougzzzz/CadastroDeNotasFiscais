@@ -82,7 +82,6 @@ if (Directory.Exists(angularDistPath))
 else
 {
     Console.WriteLine($"AVISO: Pasta Angular dist não encontrada em: {angularDistPath}");
-    // List parent directory contents to help diagnose
     string parentDir = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
     Console.WriteLine($"Conteúdo do diretório pai: {string.Join(", ", Directory.GetDirectories(parentDir).Select(Path.GetFileName))}");
 }

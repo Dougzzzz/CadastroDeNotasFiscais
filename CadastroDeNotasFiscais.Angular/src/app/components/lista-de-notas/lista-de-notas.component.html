@@ -1,5 +1,5 @@
 
-<table mat-table [dataSource]="notasFiscais" class="mat-elevation-z8 demo-table">
+<table mat-table [dataSource]="notasFiscais$" | async class="mat-elevation-z8 demo-table">
 
   <ng-container matColumnDef="demo-numero">
     <th mat-header-cell *matHeaderCellDef> Número </th>
