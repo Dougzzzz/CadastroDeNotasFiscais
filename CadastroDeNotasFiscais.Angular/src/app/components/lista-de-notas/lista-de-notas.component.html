@@ -1,5 +1,5 @@
 
-<table mat-table [dataSource]="notasFiscais$" | async class="mat-elevation-z8 demo-table">
+<!-- <table mat-table [dataSource]="notasFiscais$" | async class="mat-elevation-z8 demo-table">
 
   <ng-container matColumnDef="demo-numero">
     <th mat-header-cell *matHeaderCellDef> Número </th>
@@ -39,26 +39,36 @@
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+</table> -->
 
 
-<!-- <table class="mat-elevation-z8 demo-table">
+<div class="p-6">
+  
+  <h1 class="text-gray-900 dark:text-white text-2xl font-semibold mb-4">
+    Lista de Notas Fiscais
+  </h1>
+
+  
+  <table class="w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow">
     <thead>
-        <tr>
-            <th>Número</th>
-            <th>Data de Emissão</th>
-            <th>Valor</th>
-            <th>Fornecedor</th>
-            <th>Cliente</th>
-        </tr>
+      <tr class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+        <th class="p-3 text-left">Número</th>
+        <th class="p-3 text-left">Data de Emissão</th>
+        <th class="p-3 text-left">Valor</th>
+        <th class="p-3 text-left">Fornecedor</th>
+        <th class="p-3 text-left">Cliente</th>
+      </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let nota of notasFiscais">
-        <td>{{ nota.Numero }}</td>
-        <td>{{ nota.DataEmissao }}</td>
-        <td>{{ nota.Valor | currency:'BRL' }}</td>
-        <td>{{ nota.Fornecedor.Nome }} ({{ nota.Fornecedor.CNPJ }})</td>
-        <td>{{ nota.Cliente.Nome }} ({{ nota.Cliente.CPF }})</td>
+      
+      <tr *ngFor="let nota of notasFiscais$ | async"
+        class="border-b border-gray-200 dark:border-gray-600 text-gray-800 dark:text-gray-200"
+      >
+        <td class="p-3">{{ nota.Numero }}</td>
+        <td class="p-3">{{ nota.DataEmissao }}</td>
+        <td class="p-3">{{ nota.Valor | currency:'BRL' }}</td>
+        <td class="p-3">{{ nota.Fornecedor.Nome || 'string' }} - {{ nota.Fornecedor.Inscricao || '' }}</td>
+        <td class="p-3">{{ nota.Cliente.Nome || 'string' }} - {{ nota.Cliente.Inscricao || '' }}</td>
       </tr>
     </tbody>
-  </table> -->
+  </table>

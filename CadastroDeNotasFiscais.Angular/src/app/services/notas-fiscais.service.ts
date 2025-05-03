@@ -7,7 +7,7 @@ import { NotaFiscal } from '../models/notaFiscal.model';
   providedIn: 'root'
 })
 export class NotasFiscaisService {
-  private url = environment.api + '/NotasFiscais';
+  private url = 'https://localhost:7004/api/NotasFiscais';
   constructor(private httpClient: HttpClient) { 
     
   }

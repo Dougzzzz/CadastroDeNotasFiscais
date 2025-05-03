@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {MatTableModule} from '@angular/material/table';
 import { NotaFiscal } from '../../models/notaFiscal.model';
 import { NotasFiscaisService } from '../../services/notas-fiscais.service';
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
   standalone: true,
   templateUrl: './lista-de-notas.component.html',
   styleUrl: './lista-de-notas.component.css',
-  imports: [MatTableModule]
+  imports: [MatTableModule, CommonModule]
 })
 
 export class ListaDeNotasComponent {
