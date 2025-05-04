@@ -74,11 +74,11 @@
         <div class="space-y-2">
           <label class="block text-sm font-medium text-white-700">Data de Emissão</label>
           <input 
-            type="date" 
-            formControlName="dataEmissao"
+            type="text" 
+            onfocus="(this.type='date')" 
+            onblur="if(!this.value)this.type='text'"
             placeholder="DD/MM/AAAA"
-            class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 text-gary-600 focus:ring-blue-500 focus:border-blue-500"
-            aria-label="Data de Emissão"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
           >
         </div>
         
