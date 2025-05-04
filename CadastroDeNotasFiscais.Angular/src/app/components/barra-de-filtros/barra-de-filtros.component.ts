@@ -1,4 +1,5 @@
 import { Component, signal } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -23,9 +24,34 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatNativeDateModule,
     MatButtonModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    
   ]
 })
 export class BarraDeFiltrosComponent {
   panelOpenState = signal(false);
+  filtroForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.filtroForm = this.fb.group({
+      numeroNota: [''],
+      dataEmissao: [''],
+      nomeFornecedor: [''],
+      nomeCliente: ['']
+    });
+  }
+
+  togglePanel() {
+    this.panelOpenState.update(state => !state);
+  }
+
+  aplicarFiltros() {
+    console.log('Filtros aplicados:', this.filtroForm.value);
+    // Implemente a lógica de filtragem aqui
+  }
+
+  limparFiltros() {
+    this.filtroForm.reset();
+    // Implemente a lógica de limpeza aqui se necessário
+  }
 }
