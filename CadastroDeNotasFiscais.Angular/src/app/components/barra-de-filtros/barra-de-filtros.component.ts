@@ -9,6 +9,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NotasFiscaisService } from '../../services/notas-fiscais.service';
 
 @Component({
   selector: 'app-barra-de-filtros',
@@ -25,14 +26,13 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatIconModule,
     ReactiveFormsModule,
-    
   ]
 })
 export class BarraDeFiltrosComponent {
   panelOpenState = signal(false);
   filtroForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private NotasFiscaisService: NotasFiscaisService) {
     this.filtroForm = this.fb.group({
       numeroNota: [''],
       dataEmissao: [''],
