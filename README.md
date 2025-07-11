@@ -1,7 +1,7 @@
 # Sistema de Cadastro de Notas Fiscais
 Descrição do Projeto
 
-Este projeto é um sistema de cadastro de notas fiscais desenvolvido com arquitetura Domain-Driven Design (DDD). Ele permite realizar operações básicas de leitura e salvamento de notas fiscais, oferecendo uma API robusta e escalável para gerenciar esses dados.
+Este projeto é um sistema de cadastro de notas fiscais desenvolvido com arquitetura Domain-Driven Design (DDD). Ele permite realizar operações básicas de leitura e salvamento de notas fiscais, oferecendo uma API robusta e escalável para gerenciar esses dados. Em uma branch paralela estou implemenando um segundo front, dessa vez em angular, usei o CORS para que os dois fronts estejam disponíveis simultaneamente.
 Tecnologias Utilizadas
 
     Linguagem de Programação: .NET (C#)
