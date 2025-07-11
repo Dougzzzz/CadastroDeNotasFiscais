@@ -4,6 +4,7 @@ import {MatTableModule} from '@angular/material/table';
 import { NotaFiscal } from '../../models/notaFiscal.model';
 import { NotasFiscaisService } from '../../services/notas-fiscais.service';
 import { Observable } from 'rxjs';
+import { FiltroNotaFiscal } from '../../models/filtroNotaFiscal.model';
 
 @Component({
   selector: 'app-lista-de-notas',
@@ -23,8 +24,15 @@ export class ListaDeNotasComponent {
     this.obterNotasFiscais();
   } 
 
-  obterNotasFiscais() {
-    this.notasFiscais$ = this.notasFiscaisService.obterNotasFiscais();
+  obterNotasFiscais(filtro?: FiltroNotaFiscal): void {
+    this.notasFiscais$ = this.notasFiscaisService.obterNotasFiscais(filtro);
   }
-  
+
+  public aplicarFiltroNaLista(filtro: FiltroNotaFiscal): void {
+    this.obterNotasFiscais(filtro);
+  }
+
+  public limparFiltroNaLista(): void {
+    this.obterNotasFiscais(); // Chama sem filtro para obter todas as notas
+  }
 }

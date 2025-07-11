@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { NotaFiscal } from '../models/notaFiscal.model';
+import { Observable } from 'rxjs';
+import { FiltroNotaFiscal } from '../models/filtroNotaFiscal.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,22 @@ export class NotasFiscaisService {
     
   }
 
-  obterNotasFiscais() {
-    return this.httpClient.get<NotaFiscal[]>(this.url);
+  obterNotasFiscais(filtro?: FiltroNotaFiscal): Observable<NotaFiscal[]> {
+    let params = new HttpParams();
+    if (filtro) {
+      if (filtro.numeroNota) {
+        params = params.set('NumeroDaNota', filtro.numeroNota);
+      }
+      if (filtro.dataEmissao) {
+        params = params.set('DataEmissao', filtro.dataEmissao);
+      }
+      if (filtro.nomeFornecedor) {
+        params = params.set('NomeDoFornecedor', filtro.nomeFornecedor);
+      }
+      if (filtro.nomeCliente) {
+        params = params.set('NomeDoCliente', filtro.nomeCliente);
+      }
+    }
+    return this.httpClient.get<NotaFiscal[]>(this.url, { params });
   }
 }
